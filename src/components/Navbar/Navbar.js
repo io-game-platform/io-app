@@ -7,9 +7,7 @@ class Navbar extends Component {
         return (
             <div className="nav">
                 <h1>io.io</h1>
-                <h2>Link1</h2>
-                <h2>Link2</h2>
-                <h3>Link3</h3>
+                {this.props.children}
             </div>
         );
     }
