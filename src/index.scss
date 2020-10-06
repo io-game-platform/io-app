@@ -1,0 +1,33 @@
+/* Colors */
+$color-text: #484848;
+$color-gray-light: #909090;
+$color-primary: #282c34;
+$color-primary-light: #494a57;
+$color-primary-dark: #282c34;
+$color-white: #e0e0e0;
+$color-background: #343941;
+
+/* Fonts */
+$font-small: 0.7rem;
+$font-medium: 0.8rem;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  background-color: $color-background;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
