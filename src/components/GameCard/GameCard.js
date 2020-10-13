@@ -7,7 +7,7 @@ class GameCard extends Component {
 
     render() {
         return (
-            <Link to={`/`} className="link-wrapper">
+            <Link to={!!this.props.link ? this.props.link : "/"} className="link-wrapper">
                 <div className="game-card">
                     <div style={{backgroundColor: this.props.color}} className="game-image">Image placeholder</div>
                     <div className="game-info">
@@ -26,7 +26,8 @@ GameCard.propTypes = {
     color: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    updated: PropTypes.string.isRequired
+    updated: PropTypes.string.isRequired,
+    link: PropTypes.string
 }
 
 export default GameCard;
