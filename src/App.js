@@ -3,7 +3,7 @@ import {BrowserRouter, Link, Switch, Route} from "react-router-dom";
 import './App.scss';
 import Navbar from "./components/Navbar/Navbar";
 import GameCatalog from "./views/GameCatalog";
-import GameDetails from "./views/GameDetails";
+import GameDetails from "./views/GameDetails/GameDetails";
 
 function App() {
   return (

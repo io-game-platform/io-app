@@ -22,7 +22,7 @@ class GameCatalog extends Component {
 
     render() {
         return (
-            <Fragment className="page">
+            <Fragment>
                 <h1 style={{color: "white"}}>Game Catalog</h1>
                 <GameCard
                     id={1}
