@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import PropTypes from "prop-types";
 
 class GameDetails extends Component {
 
@@ -17,6 +18,10 @@ class GameDetails extends Component {
         );
     }
 
+}
+
+GameDetails.propTypes = {
+    gameId: PropTypes.number.isRequired
 }
 
 export default GameDetails;

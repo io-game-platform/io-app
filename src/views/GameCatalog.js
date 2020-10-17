@@ -25,18 +25,21 @@ class GameCatalog extends Component {
             <Fragment className="page">
                 <h1 style={{color: "white"}}>Game Catalog</h1>
                 <GameCard
+                    id={1}
                     name="Agar.io"
                     description="Play as a circle on a large grid, collect dots, and eat others to grow"
                     updated="10/5/2020"
                     color="#e55039"
-                    link="/agar"/>
+                    link="agar-io"/>
                 <GameCard
+                    id={2}
                     name="Slither.io"
                     description="Slither around as a snake, don't run into anyone else's tails"
                     updated="10/5/2020"
                     color="#38ada9"
-                    link="/slither"/>
+                    link="/slither-io"/>
                 <GameCard
+                    id={3}
                     name="Paper.io"
                     description="Glide across the room as a block, claiming territory and stealing it from others"
                     updated="10/5/2020"
