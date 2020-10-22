@@ -50,7 +50,6 @@
   .input-field {
     display: flex;
     flex-direction: row;
-    margin-bottom: 20px;
 
     input {
       padding: 20px;
@@ -67,24 +66,12 @@
     }
   }
 
+  .create-server-button, .input-field {
+    margin-top: 20px;
+  }
+
   p {
     margin-bottom: 30px;
   }
 
-}
-
-button {
-  padding: 20px;
-  background-color: #3b6470;
-  border: none;
-  cursor: pointer;
-  transition-duration: 0.2s;
-  border-radius: 4px;
-  color: $color-white;
-  font-size: 1em;
-  box-shadow: 6px 6px 14px -5px rgba(0, 0, 0, 0.5);
-
-  &:hover {
-    background-color: #73c3db;
-  }
 }

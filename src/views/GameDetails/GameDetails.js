@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 import {apiFetch} from "../../utils";
 import "./GameDetails.scss";
+import Button from "../../components/Button/Button";
 
 class GameDetails extends Component {
 
@@ -36,16 +37,17 @@ class GameDetails extends Component {
                     <div>
                         <h2>Online</h2>
                         <p>Join an existing server to instantly start playing.</p>
-                        <button className="online-button">Join Server</button>
+                        <Button>Join Server</Button>
+                        <div className="input-field">
+                            <input placeholder="Enter code"/>
+                            <Button className="enter-button">Go</Button>
+                        </div>
                     </div>
                     <div>
                         <h2>Local</h2>
-                        <p>Use a code to play on a server with friends.</p>
-                        <div className="input-field">
-                            <input placeholder="Enter code"/>
-                            <button className="enter-button">Go</button>
-                        </div>
-                        <button className="local-button">Create Server</button>
+                        <p>Play singleplayer or create a new game server.</p>
+                        <Button>Singleplayer</Button>
+                        <Button className="create-server-button">Create Server</Button>
                     </div>
                 </div>
             </Fragment>
