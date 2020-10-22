@@ -7,9 +7,9 @@ class GameCard extends Component {
 
     render() {
         return (
-            <Link to={!!this.props.link ? this.props.link : "/"} className="link-wrapper">
+            <Link to={`/games/${this.props.id}`} className="link-wrapper">
                 <div className="game-card">
-                    <div style={{backgroundColor: this.props.color}} className="game-image">Image placeholder</div>
+                    <div style={{backgroundColor: !!this.props.color ? this.props.backgroundColor : "white"}} className="game-image">Image placeholder</div>
                     <div className="game-info">
                         <h3>{this.props.name}</h3>
                         <p>{this.props.description}</p>
@@ -23,11 +23,11 @@ class GameCard extends Component {
 }
 
 GameCard.propTypes = {
-    color: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    color: PropTypes.string,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    updated: PropTypes.string.isRequired,
-    link: PropTypes.string
+    updated: PropTypes.string.isRequired
 }
 
 export default GameCard;
