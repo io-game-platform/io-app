@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const GameData = require('../queries');
+const GameData = require('../queries/GameData');
 
 router.get('/', (req, res) => {
     GameData.getAllGames(req, res);
