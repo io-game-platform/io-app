@@ -1,4 +1,4 @@
-const siteName = "http://localhost:8081"
+const siteName = "http://localhost:8081";
 
 class ApiClient {
 
@@ -7,7 +7,7 @@ class ApiClient {
         return fetch(url, {
             method: 'GET',
             headers: headers()
-        }).then(responseHandler(url));
+        }).then(responseHandler());
     }
 
     static post(route) {
@@ -27,7 +27,7 @@ function headers() {
     }
 }
 
-function responseHandler(url) {
+function responseHandler() {
     return async (resp) => {
         const text = await resp.text();
 
