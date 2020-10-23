@@ -15,4 +15,9 @@ router.get('/:gameId', (req, res) => {
     }
 });
 
+router.post('/', (req, res) => {
+    GameData.saveGame(req.body);
+    res.status(200).send();
+});
+
 module.exports = router;
