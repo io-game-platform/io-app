@@ -1,4 +1,4 @@
-const siteName = "http://localhost:3000"
+const siteName = "http://localhost:8081"
 
 class ApiClient {
 
@@ -29,7 +29,7 @@ function headers() {
 
 function responseHandler(url) {
     return async (resp) => {
-        const text = resp.text();
+        const text = await resp.text();
 
         if(!resp.ok) {
             let errorBody = 'error';
