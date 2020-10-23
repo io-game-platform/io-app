@@ -7,7 +7,7 @@ const getAllGames = (req, res) => {
 }
 
 const getGameById = (id, req, res) => {
-    const game = games.filter(game => (game.id === parseInt(req.params.id)));
+    const game = games.filter(g => (g.id === parseInt(req.params.gameId)));
     if (game.length > 1) return res.status(500).send();
     if (game.length === 0) return res.status(404).send();
     res.send(game[0]);
