@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
-import {apiFetch} from "../../utils";
 import "./GameDetails.scss";
 import Button from "../../components/Button/Button";
+import ApiClient from "../../ApiClient";
 
 class GameDetails extends Component {
 
@@ -14,7 +14,7 @@ class GameDetails extends Component {
     }
 
     async componentDidMount() {
-        await apiFetch(`/games/${this.props.gameId}`)
+        await ApiClient.get(`/games/${this.props.gameId}`)
             .then(game => {
                 this.setState({
                     game: game

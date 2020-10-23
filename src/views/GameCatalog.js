@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import GameCard from "../components/GameCard/GameCard";
-import {apiFetch} from "../utils"
+import ApiClient from "../ApiClient";
 
 class GameCatalog extends Component {
 
@@ -12,7 +12,7 @@ class GameCatalog extends Component {
     }
 
     async componentDidMount() {
-        await apiFetch("/games")
+        await ApiClient.get("/games")
             .then(games => {
                 this.setState({
                     games: games
