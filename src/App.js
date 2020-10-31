@@ -4,6 +4,7 @@ import './App.scss';
 import Navbar from "./components/Navbar/Navbar";
 import GameCatalog from "./views/GameCatalog";
 import GameDetails from "./views/GameDetails/GameDetails";
+import PhaserContainer from "./views/PhaserContainer/PhaserContainer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                     const gameId = parseInt(match.params.gameId);
                     return <GameDetails gameId={gameId}/>
                 }}/>
+                <Route exact={true} path="/play" component={PhaserContainer}/>
             </Switch>
         </BrowserRouter>
     </div>
