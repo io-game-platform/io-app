@@ -15,4 +15,6 @@ router.get('/:gameId', (req, res) => {
     }
 });
 
+// TODO: Create endpoint for retrieving game config
+
 module.exports = router;

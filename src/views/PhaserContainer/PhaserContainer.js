@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import PropTypes from "prop-types";
 import Phaser from "phaser";
 import {config} from "./TestGame";
 
@@ -11,7 +12,7 @@ class PhaserContainer extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.game = new Phaser.Game(config);
     }
 
@@ -24,6 +25,11 @@ class PhaserContainer extends Component {
         );
     }
 
+}
+
+PhaserContainer.propTypes = {
+    gameId: PropTypes.number.isRequired,
+    serverId: PropTypes.number.isRequired
 }
 
 export default PhaserContainer;
