@@ -1,14 +1,6 @@
 import React, {Component, Fragment} from "react";
 import Phaser from "phaser";
-import Game from "./game";
-
-export const config = {
-    type: Phaser.AUTO,
-    parent: "phaser-container",
-    width: 800,
-    height: 600,
-    scene: Game
-}
+import {config} from "./TestGame";
 
 class PhaserContainer extends Component {
 
@@ -27,7 +19,7 @@ class PhaserContainer extends Component {
         return(
             <Fragment>
                 <h1>Phaser Container</h1>
-                <div id="phaser-container"></div>
+                <div id="phaser-container"/>
             </Fragment>
         );
     }
