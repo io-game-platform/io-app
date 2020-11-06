@@ -2,16 +2,37 @@ const express = require("express");
 const router = express.Router();
 const GameData = require('../queries/GameData');
 
-router.get('/', (req, res) => {
-    GameData.getAllGames(req, res);
+router.get('/', async (req, res, next) => {
+    try {
+        const allGames = await GameData.getAllGames();
+        if (!allGames) {
+            return res.sendStatus(404);
+        }
+        req.games = allGames;
+        res.json(req.games);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
+
 });
 
-router.get('/:gameId', (req, res) => {
-    if(req.params.gameId) {
-        const gameId = req.params.gameId;
-        GameData.getGameById(gameId, req, res);
-    } else {
-        console.error(req.params);
+router.get('/:gameId', async (req, res, next) => {
+    try {
+        if (req.params.gameId) {
+            const gameId = req.params.gameId;
+            const game = await GameData.getGameById(gameId);
+            if (!game) {
+                return res.sendStatus(404);
+            }
+            req.game = game;
+            res.json(req.game);
+        } else {
+            console.error(req.params);
+        }
+    } catch (e) {
+        console.error(e);
+        next(e);
     }
 });
 
