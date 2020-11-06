@@ -36,4 +36,9 @@ router.get('/:gameId', async (req, res, next) => {
     }
 });
 
+router.post('/', (req, res) => {
+    GameData.saveGame(req.body);
+    res.status(200).send();
+});
+
 module.exports = router;
