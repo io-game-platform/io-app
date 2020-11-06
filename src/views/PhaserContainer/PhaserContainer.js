@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 import Phaser from "phaser";
 import {config} from "./TestGame";
+import ApiClient from "../../ApiClient";
 
 class PhaserContainer extends Component {
 
@@ -13,6 +14,10 @@ class PhaserContainer extends Component {
     }
 
     async componentDidMount() {
+        await ApiClient.get(`/${this.props.gameId}/${this.props.serverId}`)
+            .then(() => {
+                console.log("Retrieved config");
+            });
         this.game = new Phaser.Game(config);
     }
 

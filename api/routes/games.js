@@ -20,6 +20,9 @@ router.post('/', (req, res) => {
     res.status(200).send();
 });
 
-// TODO: Create endpoint for retrieving game config
+router.get('/:gameId/:serverId', (req, res) => {
+   const gameId = req.params.gameId;
+   const serverId = req.params.serverId;
+});
 
 module.exports = router;
