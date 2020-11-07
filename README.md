@@ -1,13 +1,28 @@
 # io-app
-Web-based platform for hosting io games
+Web-based platform for hosting io games. io games are simple web-based projects where you 
+compete against a large number of bots in a sort of 100 player free for all, single winner type game. For example, agar.io and paper.io. 
+Only a small percentage of games in this genre have achieved enough success to make their creators rich, 
+thus in order to profit these games need to be pumped out like a factory.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The backend consists of Express and Node and is built using npm. We use knex.js to interface with a mySQL database.
 
-## Available Scripts
+## Usage
 
-In the project directory, you can run:
+### Requirements
 
-### `npm start`
+You will need to have Node and npm installed in order to run this app.
+Make sure to run:
+
+#### `npm install`
+
+in order to load all the required Node modules.
+
+### Running
+
+To start the front-end, `cd` into the project directory `io-app`, then run:
+
+#### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -15,57 +30,26 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
+In a separate terminal instance, `cd` into the `io-app/api` directory and run:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### `node app.js`
 
-### `npm run build`
+which will start up the Express app on localhost:8081.
+### Navigation
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [/games](http://localhost:3000/games): A catalog of all the games displayed in a card format
+- [/games/1](http://localhost:3000/games/1): Details page for the game corresponding to the id provided in the URL. 
+An id of 1 is used as an example here.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- `api`: Holds code for the API, such as endpoints and queries
+    - `queries`: Helper classes/methods for issuing mySQL queries through knex
+    - `routes`: Defines endpoints for requests from the client, often uses helpers from `queries`
+    - `app.js`: Sets up the Express app and defines routers for `routes` endpoints
+- `src`: Holds code for the front-end, such as components and styling
+    - `components`: Reusable components that can be shared across multiple pages.
+    Each component is paired with a `.scss` file for styling
+    - `views`: pages of the site, often using `components`,
+     along with fetch requests to the API to retrieve and display data
+    - `App.js`: Defines the URL routes to each page
