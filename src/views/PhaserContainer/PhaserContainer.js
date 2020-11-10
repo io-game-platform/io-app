@@ -1,8 +1,6 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 import Phaser from "phaser";
-import {config} from "./TestGame";
-import ApiClient from "../../ApiClient";
 
 class PhaserContainer extends Component {
 
@@ -14,11 +12,19 @@ class PhaserContainer extends Component {
     }
 
     async componentDidMount() {
-        await ApiClient.get(`/${this.props.gameId}/${this.props.serverId}`)
-            .then(() => {
-                console.log("Retrieved config");
-            });
-        this.game = new Phaser.Game(config);
+        const gameFile = require(`../../games/${this.props.gameId}/game`);
+        try {
+            const gameConfig = gameFile.config;
+            if (!gameConfig) {
+                console.error(`Game ${this.props.gameId} is missing config`);
+            } else {
+                this.setState({
+                    game: new Phaser.Game(gameConfig)
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     render() {
@@ -34,7 +40,6 @@ class PhaserContainer extends Component {
 
 PhaserContainer.propTypes = {
     gameId: PropTypes.number.isRequired,
-    serverId: PropTypes.number.isRequired
 }
 
 export default PhaserContainer;
