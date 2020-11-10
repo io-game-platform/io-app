@@ -20,9 +20,4 @@ router.post('/', (req, res) => {
     res.status(200).send();
 });
 
-router.get('/:gameId/:serverId', (req, res) => {
-   const gameId = req.params.gameId;
-   const serverId = req.params.serverId;
-});
-
 module.exports = router;
