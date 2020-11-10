@@ -11,7 +11,7 @@ class PhaserContainer extends Component {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const gameFile = require(`../../games/${this.props.gameId}/game`);
         try {
             const gameConfig = gameFile.config;
@@ -25,6 +25,10 @@ class PhaserContainer extends Component {
         } catch (e) {
             console.error(e);
         }
+    }
+
+    componentWillUnmount() {
+        this.state.game.destroy(true);
     }
 
     render() {
