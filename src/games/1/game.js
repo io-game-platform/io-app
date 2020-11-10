@@ -20,8 +20,7 @@ var reloadingUntil = 0;
 var isDown = false;
 var mouseX = 0, mouseY = 0;
 
-
-export var config = {
+export const config = {
     type: Phaser.WEBGL,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
