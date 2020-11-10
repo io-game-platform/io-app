@@ -22,10 +22,9 @@ function App() {
                     const gameId = parseInt(match.params.gameId);
                     return <GameDetails gameId={gameId}/>
                 }}/>
-                <Route exact={true} path="/play/:gameId/:serverId" render={({match}) => {
+                <Route path="/play/:gameId" render={({match}) => {
                     const gameId = parseInt(match.params.gameId);
-                    const serverId = parseInt(match.params.serverId);
-                    return <PhaserContainer gameId={gameId} serverId={serverId}/>
+                    return <PhaserContainer gameId={gameId}/>
                 }}/>
             </Switch>
         </BrowserRouter>
