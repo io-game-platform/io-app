@@ -28,7 +28,7 @@ export var config = {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#2d2d2d',
-    parent: 'phaser-container',
+    parent: 'phaser-example',
     physics: {default: 'arcade'},
     scene: {
         preload: preload,
@@ -38,7 +38,7 @@ export var config = {
 };
 
 
-var game = new Phaser.Game(config);
+//var game = new Phaser.Game(config);
 
 
 var Bullet = new Phaser.Class({
@@ -138,9 +138,9 @@ var Bot = new Phaser.Class({
         this.setVisible(true);
         this.start_x = start_x;
         this.start_y = start_y;
-        if (this.type === 0) {  // Square
+        if (this.type == 0) {  // Square
             this._init_square();
-        } else if (this.type === 1) {  // Circle 8
+        } else if (this.type == 1) {  // Circle 8
             this._init_eight();
         }
     },
@@ -149,9 +149,9 @@ var Bot = new Phaser.Class({
     {
         this._update_name();
 
-        if (this.type === 0) {
+        if (this.type == 0) {
             this._move_square(this.time);
-        } else if (this.type === 1) {
+        } else if (this.type == 1) {
             this._move_eight(this.time);
         }
 
@@ -164,7 +164,7 @@ var Bot = new Phaser.Class({
     fire: function (x, y, time = 0, lifespan = 1000)
     {
         /* Fire single bullet. */
-        var bullet = bullets.get(this._name, this, 'bullet1', lifespan);
+        var bullet = bullets.get(this._name, this, 'bullet1', lifespan=lifespan);
 
         bullet.fire(x, y, this.x, this.y);
         this.reloadingUntil = time + reloadTime;
@@ -175,7 +175,7 @@ var Bot = new Phaser.Class({
         /* Fire blast of BLAST_SIZE bullets. */
         for(var i=0; i<BLAST_SIZE+1; i++)
         {
-            var bullet = bullets.get(this._name, this, 'bullet2', 400);
+            var bullet = bullets.get(this._name, this, 'bullet2', 400)
             bullet.fanned_fire(mouseX, mouseY, this.x, this.y, i, BLAST_SIZE)
         }
         this.reloadingUntil = time + reloadTime;
@@ -259,7 +259,7 @@ var Bot = new Phaser.Class({
     _move_eight: function (time)
     {
         /* Update for circle eight movement pattern. */
-        if (time % (2 * this.step_value) - Math.floor(this.step_value / 2) === 0) {
+        if (time % (2 * this.step_value) - Math.floor(this.step_value / 2) == 0) {
             this.direction = !this.direction;
         }
 
@@ -299,7 +299,7 @@ var Bot = new Phaser.Class({
     owns: function (bullet)
     {
         /* Does this ship own bullet? */
-        return bullet.get_owner() === this._name;
+        return bullet.get_owner() == this._name;
     }
 });
 
@@ -409,7 +409,6 @@ class Leaderboard {
         var ships = this._list_ships();
         ships.sort(function(a, b){return b._score - a._score});
 
-        console.log(ships);
         for (var i = 0; i < this.n_entries; i++) {
             this.entry[i][0].text = ships[i]._name;
             this.entry[i][1].text = ships[i]._score;
@@ -490,7 +489,7 @@ function create ()
     //////////////////////
 
     // Prevent right click context menu
-    game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
+    //game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
     // Set global variables for pointer control
     this.input.on('pointerdown', function (pointer) {

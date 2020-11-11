@@ -18,6 +18,7 @@ class PhaserContainer extends Component {
             if (!gameConfig) {
                 console.error(`Game ${this.props.gameId} is missing config`);
             } else {
+                gameConfig.parent = "phaser-container";
                 this.setState({
                     game: new Phaser.Game(gameConfig)
                 });
