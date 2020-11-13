@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
-import {apiFetch} from "../../utils";
 import "./GameDetails.scss";
 import Button from "../../components/Button/Button";
+import ApiClient from "../../ApiClient";
 
 class GameDetails extends Component {
 
@@ -14,7 +14,7 @@ class GameDetails extends Component {
     }
 
     async componentDidMount() {
-        await apiFetch(`/games/${this.props.gameId}`)
+        await ApiClient.get(`/games/${this.props.gameId}`)
             .then(game => {
                 this.setState({
                     game: game
@@ -26,7 +26,7 @@ class GameDetails extends Component {
         return (
             <Fragment>
                 <div className="game-image">
-                    <h1>Game Title</h1>
+                    <h1>{!!this.state.game ? this.state.game.name : "Game Title"}</h1>
                     <div className="game-data">
                         <h3>0 players online</h3>
                         <h3>Last updated 10/16/2020</h3>
