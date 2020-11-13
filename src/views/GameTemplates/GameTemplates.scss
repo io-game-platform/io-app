@@ -1,0 +1,54 @@
+@import "../../index";
+
+.page-container {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.template-header {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    color: $color-white;
+
+    .new-template-button, h1, .input-field {
+        align-self: center;
+    }
+
+    .new-template-button {
+        justify-self: center;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    .input-field {
+        input {
+            height: 50px;
+            width: 250px;
+            font-size: 1rem;
+            border-color: white;
+            background-color: transparent;
+            color: white;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+        }
+    }
+}
+
+.my-server {
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #242424;
+    padding: 10px 30px;
+    color: $color-white;
+
+    .server-info {
+        h1 { font-size: 120%; }
+        h2 { font-size: 110%; }
+    }
+}
