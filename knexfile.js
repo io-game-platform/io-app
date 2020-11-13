@@ -1,15 +1,22 @@
 // Update with your config settings.
+require("./setup_env");
+const connection = {
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
+}
 
 module.exports = {
 
   development: {
     client: 'mysql',
-    connection: process.env.DB_URL
+    connection: connection
   },
 
   staging: {
     client: 'mysql',
-    connection: process.env.DB_URL,
+    connection: connection,
     pool: {
       min: 2,
       max: 10
@@ -21,7 +28,7 @@ module.exports = {
 
   production: {
     client: 'mysql',
-    connection: process.env.DB_URL,
+    connection: connection,
     pool: {
       min: 2,
       max: 10
