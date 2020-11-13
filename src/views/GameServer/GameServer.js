@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import Button from "../../components/Button/Button";
-//import PropTypes from "prop-types";
 import "./GameServer.scss";
 import { Link } from "react-router-dom";
 
