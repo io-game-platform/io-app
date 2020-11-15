@@ -7,6 +7,8 @@ import GameDetails from "./views/GameDetails/GameDetails";
 import GameServer from './views/GameServer/GameServer';
 import GameTemplates from './views/GameTemplates/GameTemplates';
 import LoginPage from "./views/LoginPage";
+import PhaserContainer from "./views/PhaserContainer/PhaserContainer";
+
 function App() {
   return (
     <div className="App">
@@ -25,6 +27,10 @@ function App() {
                 <Route path="/games/:gameId" render={({ match }) => {
                     const gameId = parseInt(match.params.gameId);
                     return <GameDetails gameId={gameId}/>
+                }}/>
+                <Route path="/play/:gameId" render={({match}) => {
+                    const gameId = parseInt(match.params.gameId);
+                    return <PhaserContainer gameId={gameId}/>
                 }}/>
             </Switch>
         </BrowserRouter>

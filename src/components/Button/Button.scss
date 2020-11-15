@@ -1,6 +1,6 @@
 @import "../../index";
 
-button {
+.default-button {
   padding: 20px;
   background-color: #3b6470;
   border: none;
@@ -14,4 +14,8 @@ button {
   &:hover {
     background-color: #73c3db;
   }
+}
+
+.button-link button {
+  width: 100%;
 }
