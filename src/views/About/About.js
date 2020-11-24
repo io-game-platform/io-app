@@ -38,7 +38,7 @@ class About extends Component {
                         <li>Develop an intuitive, easy-to-use set of tools to develop .io games</li>
                     </ul>
                 </p>
-                <p>This project is entirely open source, so feel free to check out our GitHub repositories for the <a target="_blank" rel="noopener noreferrer" href="https://github.com/io-game-platform/io.io">games</a> or the <a target="_blank" rel="noopener noreferrer" href="https://github.com/io-game-platform/io.io">app</a>.</p>
+                <p>This project is entirely open source, so feel free to check out our GitHub repositories for the <a className="text-link" target="_blank" rel="noopener noreferrer" href="https://github.com/io-game-platform/io.io">games</a> or the <a className="text-link" target="_blank" rel="noopener noreferrer" href="https://github.com/io-game-platform/io.io">app</a>.</p>
                 <h3>Contributors</h3>
                 <hr/>
                 <div className="contributors-container">
