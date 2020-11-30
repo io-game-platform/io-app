@@ -8,6 +8,7 @@ import GameServer from './views/GameServer/GameServer';
 import GameTemplates from './views/GameTemplates/GameTemplates';
 import LoginPage from "./views/LoginPage";
 import PhaserContainer from "./views/PhaserContainer/PhaserContainer";
+import About from "./views/About/About";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Navbar>
                 <Link to="/games">Games</Link>
                 <Link to="/templates">Templates</Link>
+                <Link to="/about">About</Link>
                 <Link to="/login">Log in</Link>
             </Navbar>
             <Switch>
@@ -24,6 +26,7 @@ function App() {
                 <Route exact={true} path="/login" component={LoginPage}/>
                 <Route exact={true} path="/templates" component={GameTemplates}/>
                 <Route exact={true} path="/new-template" component={GameServer}/>
+                <Route exact={true} path="/about" component={About}/>
                 <Route path="/games/:gameId" render={({ match }) => {
                     const gameId = parseInt(match.params.gameId);
                     return <GameDetails gameId={gameId}/>
