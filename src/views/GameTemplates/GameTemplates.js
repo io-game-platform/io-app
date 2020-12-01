@@ -40,6 +40,11 @@ class GameTemplates extends Component {
                                    <h1>{template.name}</h1>
                                    <h2>{template.game} - 0 Players</h2>
                                </div>
+                               {template.open && !!template.code && (
+                                   <div>
+                                       <p>{template.code}</p>
+                                   </div>
+                               )}
                                {template.open ?
                                    <div className='server-buttons'>
                                        <Button className='join-server'>Join</Button>
