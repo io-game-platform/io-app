@@ -14,6 +14,10 @@ export const GlobalStyles = createGlobalStyle`
     display: flex;
     flex-direction: column;
     justify-content: center;
+<<<<<<< HEAD
+=======
+    height: 100vh;
+>>>>>>> Initial light/dark toggle. Toggle button WIP settings page WIP
     margin: 0;
     padding: 0;
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
