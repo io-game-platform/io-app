@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from "react";
 import Button from "../../components/Button/Button";
-import "./GameServer.scss";
+import "./NewTemplate.scss";
 import { Link } from "react-router-dom";
 
-class GameServer extends Component {
+class NewTemplate extends Component {
 
     constructor(props) {
         super(props);
@@ -16,7 +16,7 @@ class GameServer extends Component {
 		return (
 			<Fragment>
 				<div className='template-title'>
-					<h1>New Game Template</h1>
+					<h1>New Server Template</h1>
 				</div>
 				<div className='server-container'>
 					<div>
@@ -38,7 +38,7 @@ class GameServer extends Component {
 							</div>
 							<div className='field'>
 								<div className='value-left'>1 player</div>
-								<input type='range' min='1' max='100' value='100' steps='1'></input>
+								<input type='range' min='1' max='100' value='100' step='1'/>
 								<div className='value-right'>100 players</div>
 							</div>
 						</div>
@@ -52,4 +52,4 @@ class GameServer extends Component {
     }
 }
 
-export default GameServer;
+export default NewTemplate;

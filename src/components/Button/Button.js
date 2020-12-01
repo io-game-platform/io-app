@@ -9,7 +9,7 @@ class Button extends Component {
         return (
             !this.props.link ?
                 (<button className={`default-button${!!this.props.className ? ` ${this.props.className}` : ""}`}>{this.props.children}</button>) :
-                (<Link className="button-link" to={this.props.link}><button className={`default-button`}>{this.props.children}</button></Link>)
+                (<Link className={`button-link${!!this.props.className ? ` ${this.props.className}` : ""}`} to={this.props.link}><button className={`default-button`}>{this.props.children}</button></Link>)
         );
     }
 
