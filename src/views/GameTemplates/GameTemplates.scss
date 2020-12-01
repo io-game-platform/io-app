@@ -9,7 +9,6 @@
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr 1fr;
-    color: $color-white;
 
     .new-template-button, h1, .input-field {
         align-self: center;
@@ -30,7 +29,6 @@
             font-size: 1rem;
             border-color: white;
             background-color: transparent;
-            color: white;
             padding-left: 0.5em;
             padding-right: 0.5em;
         }
@@ -45,7 +43,6 @@
 
     border-bottom: 1px solid #242424;
     padding: 10px 30px;
-    color: $color-white;
 
     .server-info {
         h1 { font-size: 120%; }
