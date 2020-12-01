@@ -5,7 +5,7 @@ const TemplateData = require("../queries/TemplateData");
 // Get all server templates
 router.get('/', (req, res, next) => {
     try {
-        const allTemplates = TemplateData.getAllTemplates(req, res);
+        const allTemplates = TemplateData.getAllTemplates();
         if (!allTemplates) {
             return res.sendStatus(404);
         }

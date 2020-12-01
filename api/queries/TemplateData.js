@@ -4,8 +4,8 @@ let templates = [];
 
 class TemplateData {
 
-    static getAllTemplates(req, res) {
-        res.send(templates);
+    static getAllTemplates() {
+        return templates;
     }
 
     static saveTemplate(template) {
