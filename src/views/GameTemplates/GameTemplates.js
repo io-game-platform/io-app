@@ -38,7 +38,7 @@ class GameTemplates extends Component {
                            <div key={template.id} className="my-server">
                                <div className='server-info'>
                                    <h1>{template.name}</h1>
-                                   <h2>{template.game} - 0 Players</h2>
+                                   <h2>{template.game} - 0/{template.maxPlayers} Players</h2>
                                </div>
                                {template.open && !!template.code && (
                                    <div>

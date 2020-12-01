@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 import Button from "../../components/Button/Button";
 import "./NewTemplate.scss";
 import { Link } from "react-router-dom";
+import ApiClient from "../../ApiClient";
 
 class NewTemplate extends Component {
 
@@ -11,9 +12,9 @@ class NewTemplate extends Component {
         	name: "",
             game: {
         		id: null,
-				name: "",
+				name: "No game",
 			},
-			numPlayers: 0,
+			maxPlayers: 0,
         }
     }
 
@@ -46,7 +47,7 @@ class NewTemplate extends Component {
 					<div>
 						<div className='range'>
 							<div id='slider-value'>
-								<span>Max players: {this.state.numPlayers}</span>
+								<span>Max players: {this.state.maxPlayers}</span>
 							</div>
 							<div className='field'>
 								<div className='value-left'>1 player</div>
@@ -57,7 +58,7 @@ class NewTemplate extends Component {
 									step='1'
 									onChange={(e) => {
 										this.setState({
-											numPlayers: e.target.value
+											maxPlayers: e.target.value
 										});
 									}}
 								/>
@@ -66,7 +67,19 @@ class NewTemplate extends Component {
 						</div>
 					</div>
 					<Link to='/templates'>
-						<Button className='create-server'>Create</Button>
+						<Button
+							className='create-server'
+							onClick={async () => {
+								await ApiClient.post("/templates", {
+									name: this.state.name,
+									gameId: this.state.game.id,
+									game: this.state.game.name,
+									maxPlayers: this.state.maxPlayers
+								});
+							}}
+						>
+							Create
+						</Button>
 					</Link>
 				</div>
 			</Fragment>

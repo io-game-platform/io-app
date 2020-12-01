@@ -8,8 +8,22 @@ class Button extends Component {
     render() {
         return (
             !this.props.link ?
-                (<button className={`default-button${!!this.props.className ? ` ${this.props.className}` : ""}`}>{this.props.children}</button>) :
-                (<Link className={`button-link${!!this.props.className ? ` ${this.props.className}` : ""}`} to={this.props.link}><button className={`default-button`}>{this.props.children}</button></Link>)
+                (<button
+                    className={`default-button${!!this.props.className ? ` ${this.props.className}` : ""}`}
+                    onClick={this.props.onClick}
+                >
+                    {this.props.children}
+                </button>) :
+                (<Link
+                    className={`button-link${!!this.props.className ? ` ${this.props.className}` : ""}`}
+                    to={this.props.link}>
+                    <button
+                        className={`default-button`}
+                        onClick={this.props.onClick}
+                    >
+                        {this.props.children}
+                    </button>
+                </Link>)
         );
     }
 
@@ -17,6 +31,7 @@ class Button extends Component {
 
 Button.propTypes = {
     className: PropTypes.string,
+    onClick: PropTypes.func,
     link: PropTypes.string
 }
 
