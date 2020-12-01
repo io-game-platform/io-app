@@ -8,7 +8,12 @@ class NewTemplate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            game: null
+        	name: "",
+            game: {
+        		id: null,
+				name: "",
+			},
+			numPlayers: 0,
         }
     }
 
@@ -21,7 +26,14 @@ class NewTemplate extends Component {
 				<div className='server-container'>
 					<div>
 						<div className='input-field'>
-							<input placeholder='Server Title'/>
+							<input
+								placeholder="Server Title"
+								onChange={(e) => {
+									this.setState({
+										name: e.target.value
+									});
+								}}
+							/>
 						</div>
 					</div>
 					<div className='game-title'>
@@ -34,11 +46,21 @@ class NewTemplate extends Component {
 					<div>
 						<div className='range'>
 							<div id='slider-value'>
-								<span>Max players: 100</span>
+								<span>Max players: {this.state.numPlayers}</span>
 							</div>
 							<div className='field'>
 								<div className='value-left'>1 player</div>
-								<input type='range' min='1' max='100' value='100' step='1'/>
+								<input
+									type='range'
+									min='1'
+									max='100'
+									step='1'
+									onChange={(e) => {
+										this.setState({
+											numPlayers: e.target.value
+										});
+									}}
+								/>
 								<div className='value-right'>100 players</div>
 							</div>
 						</div>
