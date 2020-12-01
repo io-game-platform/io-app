@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import Button from "../../components/Button/Button";
 import "./GameTemplates.scss";
+import ApiClient from "../../ApiClient";
 
 class GameTemplates extends Component {
     
@@ -9,6 +10,15 @@ class GameTemplates extends Component {
         this.state = {
             templates: []
         }
+    }
+
+    async componentDidMount() {
+        await ApiClient.get("/templates")
+            .then(templates => {
+                this.setState({
+                    templates: templates
+                });
+            });
     }
 
     render() {
@@ -25,18 +35,21 @@ class GameTemplates extends Component {
                     {this.state.templates.length === 0 && <p>No templates to show</p>}
                     {this.state.templates.map(template => {
                        return (
-                           <div className="my-server">
+                           <div key={template.id} className="my-server">
                                <div className='server-info'>
-                                   <h1>My Agar.io Server</h1>
-                                   <h2>Agar.io - 0 Players</h2>
+                                   <h1>{template.name}</h1>
+                                   <h2>{template.game} - 0 Players</h2>
                                </div>
                                {template.open ?
                                    <div className='server-buttons'>
-                                       <Button className='join-server'>Join</Button> <Button className='close-server'>Close</Button> <Button className='edit-server'>Edit</Button>
+                                       <Button className='join-server'>Join</Button>
+                                       <Button className='close-server'>Close</Button>
+                                       <Button className='edit-server'>Edit</Button>
                                    </div>
                                    :
                                    <div className='server-buttons'>
-                                       <Button className='open-server'>Open</Button> <Button className='edit-server'>Edit</Button>
+                                       <Button className='open-server'>Open</Button>
+                                       <Button className='edit-server'>Edit</Button>
                                    </div>
                                }
                            </div>
