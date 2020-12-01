@@ -14,7 +14,7 @@ class NewTemplate extends Component {
         		id: null,
 				name: "No game",
 			},
-			maxPlayers: 0,
+			maxPlayers: 1,
         }
     }
 
@@ -56,6 +56,7 @@ class NewTemplate extends Component {
 									min='1'
 									max='100'
 									step='1'
+									value={this.state.maxPlayers}
 									onChange={(e) => {
 										this.setState({
 											maxPlayers: e.target.value
