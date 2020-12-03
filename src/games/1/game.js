@@ -479,7 +479,7 @@ function preload ()
     
     this.load.image('ship', '../assets/sprites/ship.png');
     this.load.image('bullet1', '../assets/sprites/bullet.png');
-    this.load.image('bullet2', '../assets/sprites/bullet.png');
+    this.load.image('bullet2', '../assets/sprites/bullet2.png');
     this.load.image('button', '../assets/sprites/button.png');
     this.load.image('star', '../assets/sprites/star.png');
 
