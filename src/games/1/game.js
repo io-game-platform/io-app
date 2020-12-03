@@ -568,7 +568,7 @@ function create ()
         this.rexUI.edit(name_input)
     });
 
-    respawn_button = this.add.sprite(center_x, center_y, 'button', 0);
+    respawn_button = this.add.sprite(center_x, center_y+25, 'button', 0);
     respawn_button.setInteractive();
     respawn_button.on('pointerdown', function () {
         var player_name = 'Coolest Player';
