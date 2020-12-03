@@ -16,11 +16,11 @@ var BOT_RANGE = 300;
 //
 var players, bots, bullets;
 var respawn_button, name_input;
-var leaderboard;
+var leaderboard, ui_rect, game_name;
 
 var player_main;
 var numBots = 0, reloadingUntil = 0;
-var leftDown = false, rightDown = false;
+var leftDown = false, middleDown = false;
 var mouseX = 0, mouseY = 0;
 
 export var config = {
@@ -38,7 +38,7 @@ export var config = {
 };
 
 
-//var game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
 
 
 var Bullet = new Phaser.Class({
@@ -75,7 +75,7 @@ var Bullet = new Phaser.Class({
         this.incX = Math.cos(angle);
         this.incY = Math.sin(angle);
     },
-
+    
     fanned_fire: function (x, y, init_x, init_y, i, n)
     {
         this.setActive(true);
@@ -161,21 +161,22 @@ var Bot = new Phaser.Class({
         this.time += 1;
     },
 
-    fire: function (x, y, time = 0, lifespan = 1000)
+    fire: function (x, y, time, lifespan)
     {
         /* Fire single bullet. */
-        var bullet = bullets.get(this._name, this, 'bullet1', lifespan=lifespan);
+        var bullet = bullets.get(this._name, this, 'bullet1', lifespan);
 
         bullet.fire(x, y, this.x, this.y);
         this.reloadingUntil = time + reloadTime;
     },
 
-    blast: function (x, y, time = 0)
+    blast: function (x, y, time)
     {
         /* Fire blast of BLAST_SIZE bullets. */
+        var bullet;
         for(var i=0; i<BLAST_SIZE+1; i++)
         {
-            var bullet = bullets.get(this._name, this, 'bullet2', 400)
+            bullet = bullets.get(this._name, this, 'bullet2', 400)
             bullet.fanned_fire(mouseX, mouseY, this.x, this.y, i, BLAST_SIZE)
         }
         this.reloadingUntil = time + reloadTime;
@@ -276,15 +277,21 @@ var Bot = new Phaser.Class({
 
     destroy_bot: function ()
     {
-        this.destroy();
-        this._hide_name();
-        numBots -= 1;
+        if(this.active){
+            this.destroy();
+            this._hide_name();
+            numBots -= 1;
+        }
     },
 
     shoot_nearest: function (time)
     {
         /* Shoot nearest game object to bot. */
         var closest = this.scene.physics.closest(this);
+
+        if (typeof closest !== 'undefined'){
+            return;
+        }
 
         var dist = Math.pow(Math.pow(this.x - closest.x, 2) + Math.pow(this.y - closest.y, 2), .5)
 
@@ -308,7 +315,7 @@ var Player = new Phaser.Class({
 
     Extends: Bot,
 
-    initialize: function Player (scene, is_main=false, name='player')
+    initialize: function Player (scene, is_main, name)
     {
         Phaser.GameObjects.Image.call(this, scene, 0, 0, 'ship');
         this.setDepth(2);
@@ -350,9 +357,9 @@ var Player = new Phaser.Class({
             {
                 if (leftDown)
                 {
-                    this.fire(mouseX, mouseY, time);
+                    this.fire(mouseX, mouseY, time, 1000);
                 }
-                if (rightDown)
+                if (middleDown)
                 {
                     this.blast(mouseX, mouseY, time)
                 }
@@ -371,6 +378,10 @@ var Player = new Phaser.Class({
         player_main.x = center_x;
         player_main.y = center_y;
 
+        ui_rect.setActive(true);
+        ui_rect.setVisible(true);
+        game_name.setActive(true);
+        game_name.setVisible(true);
         name_input.setActive(true);
         name_input.setVisible(true);
         respawn_button.setActive(true);
@@ -410,8 +421,10 @@ class Leaderboard {
         ships.sort(function(a, b){return b._score - a._score});
 
         for (var i = 0; i < this.n_entries; i++) {
-            this.entry[i][0].text = ships[i]._name;
-            this.entry[i][1].text = ships[i]._score;
+            if(typeof ships[i] !== 'undefined'){
+                this.entry[i][0].text = ships[i]._name;
+                this.entry[i][1].text = ships[i]._score;
+            }
         }
     }
 };
@@ -424,8 +437,8 @@ function spawn_bots (n)
     */
     numBots += n;
     for (var i = 0; i < n; i++) {
-        var bot = bots.get('Bot '+Phaser.Math.Between(1,999));
-        bot.spawn(Phaser.Math.Between(i*(MAP_WIDTH/n), (i+1)*(MAP_WIDTH/n)), Phaser.Math.Between(i*(MAP_HEIGHT/n), (i+1)*(MAP_HEIGHT/n)));
+        var curr_bot = bots.get(name='Bot '+Phaser.Math.Between(1,999));
+        curr_bot.spawn(Phaser.Math.Between(i*(MAP_WIDTH/n), (i+1)*(MAP_WIDTH/n)), Phaser.Math.Between(i*(MAP_HEIGHT/n), (i+1)*(MAP_HEIGHT/n)));
     }
 }
 
@@ -463,7 +476,7 @@ function preload ()
     Preload is called by Phaser before anything else.
     */
     this.input.setDefaultCursor('url(assets/input/cursors/sc2/SC2-target-none.cur), pointer');
-
+    
     this.load.image('ship', 'assets/sprites/ship.png');
     this.load.image('bullet1', 'assets/sprites/bullets/bullet11.png');
     this.load.image('bullet2', 'assets/sprites/bullets/bullet4.png');
@@ -489,16 +502,16 @@ function create ()
     //////////////////////
 
     // Prevent right click context menu
-    //game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
+    game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
     // Set global variables for pointer control
     this.input.on('pointerdown', function (pointer) {
         leftDown = pointer.leftButtonDown();
-        rightDown = pointer.rightButtonDown();
+        middleDown = pointer.middleButtonDown();
     });
     this.input.on('pointerup', function (pointer) {
         leftDown = pointer.leftButtonDown();
-        rightDown = pointer.rightButtonDown();
+        middleDown = pointer.middleButtonDown();
     });
 
     //////////////////////
@@ -515,7 +528,7 @@ function create ()
     var player_bounds = new Phaser.Geom.Rectangle(0, 0, MAP_WIDTH, MAP_HEIGHT);
     players = this.physics.add.group({
         classType: Player,
-        maxSize: maxPlayers,
+        maxSize: maxPlayers + 100,
         customBoundsRectangle: player_bounds,
         collideWorldBounds: true,
         runChildUpdate: true
@@ -523,13 +536,13 @@ function create ()
 
     bots = this.physics.add.group({
         classType: Bot,
-        maxSize: maxBots,
+        maxSize: maxBots + 100,
         runChildUpdate: true
     });
 
     bullets = this.physics.add.group({
         classType: Bullet,
-        maxSize: maxBullets,
+        maxSize: maxBullets + 100,
         runChildUpdate: true
     });
 
@@ -541,6 +554,13 @@ function create ()
     ////////////////////////
     //  User Interface    //
     ////////////////////////
+
+    var rect_w = 165, rect_h = 100;
+    ui_rect = this.add.rectangle(center_x-4, center_y, rect_w, rect_h, 0x555555);
+    ui_rect.setOrigin(0.5, 0.5);
+
+    game_name = this.add.text(center_x, center_y-40, 'template', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    game_name.setOrigin(0.5, 0.5);
 
     name_input = this.add.text(center_x, center_y, 'Enter name here', { fixedWidth: 150, fixedHeight: 36 });
     name_input.setOrigin(0.5, 0.5);
@@ -561,6 +581,10 @@ function create ()
 
         respawn_button.setDepth(3);
 
+        ui_rect.setActive(false);
+        ui_rect.setVisible(false);
+        game_name.setActive(false);
+        game_name.setVisible(false);
         name_input.setActive(false);
         name_input.setVisible(false);
         respawn_button.setActive(false);
@@ -594,7 +618,7 @@ function update (time, delta)
         bot.shoot_nearest(time);
     }, this);
 
-
+    numBots = Math.max(0, numBots);
     spawn_bots(maxBots - numBots);
     leaderboard.update();
 }
