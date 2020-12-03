@@ -24,7 +24,7 @@ var numBots = 0, reloadingUntil = 0, numPoints = 0;
 var leftDown = false, rightDown = false, scaleChange = false;
 var mouseX = 0, mouseY = 0;
 
-var config = {
+export var config = {
     type: Phaser.WEBGL,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
@@ -37,8 +37,6 @@ var config = {
         update: update
     }
 };
-
-var game = new Phaser.Game(config);
 
 var Bot = new Phaser.Class({
 
