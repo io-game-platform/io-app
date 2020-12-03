@@ -475,11 +475,11 @@ function preload ()
     /*
     Preload is called by Phaser before anything else.
     */
-    this.input.setDefaultCursor('url(assets/input/cursors/sc2/SC2-target-none.cur), pointer');
+    this.input.setDefaultCursor('assets/sc2/SC2-target-none.cur');
     
     this.load.image('ship', '../assets/sprites/ship.png');
-    this.load.image('bullet1', '../assets/sprites/bullets/bullet11.png');
-    this.load.image('bullet2', '../assets/sprites/bullets/bullet4.png');
+    this.load.image('bullet1', '../assets/sprites/bullet.png');
+    this.load.image('bullet2', '../assets/sprites/bullet.png');
     this.load.image('button', '../assets/sprites/button.png');
     this.load.image('star', '../assets/sprites/yellow_ball.png');
 
