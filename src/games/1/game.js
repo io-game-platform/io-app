@@ -38,7 +38,7 @@ export var config = {
 };
 
 
-var game = new Phaser.Game(config);
+//var game = new Phaser.Game(config);
 
 
 var Bullet = new Phaser.Class({
@@ -289,7 +289,7 @@ var Bot = new Phaser.Class({
         /* Shoot nearest game object to bot. */
         var closest = this.scene.physics.closest(this);
 
-        if (typeof closest !== 'undefined'){
+        if (typeof closest === 'undefined'){
             return;
         }
 
@@ -502,7 +502,7 @@ function create ()
     //////////////////////
 
     // Prevent right click context menu
-    game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
+    this.oncontextmenu = function (e) { e.preventDefault(); }
 
     // Set global variables for pointer control
     this.input.on('pointerdown', function (pointer) {
