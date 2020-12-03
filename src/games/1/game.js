@@ -437,7 +437,7 @@ function spawn_bots (n)
     */
     numBots += n;
     for (var i = 0; i < n; i++) {
-        var curr_bot = bots.get(name='Bot '+Phaser.Math.Between(1,999));
+        var curr_bot = bots.get('Bot '+Phaser.Math.Between(1,999));
         curr_bot.spawn(Phaser.Math.Between(i*(MAP_WIDTH/n), (i+1)*(MAP_WIDTH/n)), Phaser.Math.Between(i*(MAP_HEIGHT/n), (i+1)*(MAP_HEIGHT/n)));
     }
 }
@@ -477,11 +477,11 @@ function preload ()
     */
     this.input.setDefaultCursor('url(assets/input/cursors/sc2/SC2-target-none.cur), pointer');
     
-    this.load.image('ship', 'assets/sprites/ship.png');
-    this.load.image('bullet1', 'assets/sprites/bullets/bullet11.png');
-    this.load.image('bullet2', 'assets/sprites/bullets/bullet4.png');
-    this.load.image('button', 'assets/sprites/bullets/bullet11.png');
-    this.load.image('star', 'assets/sprites/yellow_ball.png');
+    this.load.image('ship', '../assets/sprites/ship.png');
+    this.load.image('bullet1', '../assets/sprites/bullets/bullet11.png');
+    this.load.image('bullet2', '../assets/sprites/bullets/bullet4.png');
+    this.load.image('button', '../assets/sprites/button.png');
+    this.load.image('star', '../assets/sprites/yellow_ball.png');
 
     this.load.scenePlugin({
         key: 'rexuiplugin',
