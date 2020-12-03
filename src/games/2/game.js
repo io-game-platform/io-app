@@ -14,7 +14,7 @@ var BLAST_SIZE = 4;
 var BOT_RANGE = 300;
 
 //
-var players, bots;
+var players, bots, points;
 var respawn_button, name_input, game_name, ui_rect;
 var leaderboard, ui_rect, game_name;
 
@@ -37,6 +37,8 @@ var config = {
         update: update
     }
 };
+
+var game = new Phaser.Game(config);
 
 var Bot = new Phaser.Class({
 
@@ -132,7 +134,7 @@ var Bot = new Phaser.Class({
         var min_distance = 10000000000;
 
         var ships = this._list_ships();
-
+        var opponent
         for (var i = 0; i < ships.length; i++){
             opponent = ships[i];
 
@@ -404,7 +406,7 @@ function preload ()
     /*
     Preload is called by Phaser before anything else.
     */
-    this.load.image('button', 'assets/sprites/bullets/bullet11.png');
+    this.load.image('button', '../assets/sprites/button.png');
 
     this.load.scenePlugin({
         key: 'rexuiplugin',
