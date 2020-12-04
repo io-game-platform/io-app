@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import Button from "../../components/Button/Button";
 import "./GameTemplates.scss";
+import Input from "../../components/Input/Input";
 
 class GameTemplates extends Component {
     
@@ -17,10 +18,8 @@ class GameTemplates extends Component {
                 <div className='page-container'>
                     <div className='template-header'>
                         <Button className='new-template-button'>New Template</Button>
-                        <h1>Templates</h1>
-                        <div className='input-field'>
-                            <input placeholder='Filter'/>
-                        </div>
+                        <h1 className="page-title">Templates</h1>
+                        <Input placeholder="Filter" transparent/>
                     </div>
                     <div className='my-server'>
                         <div className='server-info'>

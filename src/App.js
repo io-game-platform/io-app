@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Link, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import './App.scss';
 import Navbar from "./components/Navbar/Navbar";
 import GameCatalog from "./views/GameCatalog";
@@ -14,12 +14,7 @@ function App() {
   return (
     <div className="App">
         <BrowserRouter>
-            <Navbar>
-                <Link to="/games">Games</Link>
-                <Link to="/templates">Templates</Link>
-                <Link to="/about">About</Link>
-                <Link to="/login">Log in</Link>
-            </Navbar>
+            <Navbar/>
             <Switch>
                 <Route exact={true} path="/" component={GameCatalog}/>
                 <Route exact={true} path="/games" component={GameCatalog}/>

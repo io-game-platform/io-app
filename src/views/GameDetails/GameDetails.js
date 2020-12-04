@@ -26,7 +26,7 @@ class GameDetails extends Component {
         return (
             <Fragment>
                 <div className="game-image">
-                    <h1>{!!this.state.game ? this.state.game.name : "Game Title"}</h1>
+                    <h1 className="page-title">{!!this.state.game ? this.state.game.name : "Game Title"}</h1>
                     <div className="game-data">
                         <h3>0 players online</h3>
                         <h3>Last updated 10/16/2020</h3>
