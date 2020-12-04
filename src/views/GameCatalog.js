@@ -24,6 +24,8 @@ class GameCatalog extends Component {
         return (
             <Fragment>
                 <h1 style={{color: "white"}}>Game Catalog</h1>
+                <a href="/play/1">TEMP Play Game 1\n</a>
+                <a href="/play/2">TEMP Play Game 2</a>
                 {this.state.games.length > 0 ?
                 this.state.games.map(game => (
                     <GameCard
