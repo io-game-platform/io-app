@@ -475,8 +475,6 @@ function preload ()
     /*
     Preload is called by Phaser before anything else.
     */
-    this.input.setDefaultCursor('../assets/SC2-target-none.cur');
-    
     this.load.image('ship', '../assets/sprites/ship.png');
     this.load.image('bullet1', '../assets/sprites/bullet.png');
     this.load.image('bullet2', '../assets/sprites/bullet2.png');
@@ -500,6 +498,8 @@ function create ()
     //////////////////////
     //  Declarations    //
     //////////////////////
+
+    this.input.setDefaultCursor('url(../assets/SC2-target-none.cur, pointer)');
 
     // Prevent right click context menu
     this.oncontextmenu = function (e) { e.preventDefault(); }
