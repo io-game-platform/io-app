@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import GameCard from "../components/GameCard/GameCard";
 import ApiClient from "../ApiClient";
+import {Link} from "react-router-dom";
 
 class GameCatalog extends Component {
 
@@ -24,8 +25,8 @@ class GameCatalog extends Component {
         return (
             <Fragment>
                 <h1 style={{color: "white"}}>Game Catalog</h1>
-                <a href="/play/1">TEMP Play Game 1\n</a>
-                <a href="/play/2">TEMP Play Game 2</a>
+                <Link to="/play/1">TEMP Play Game 1\n</Link>
+                <Link to="/play/2">TEMP Play Game 2</Link>
                 {this.state.games.length > 0 ?
                 this.state.games.map(game => (
                     <GameCard
