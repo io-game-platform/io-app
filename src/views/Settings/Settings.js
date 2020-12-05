@@ -45,21 +45,21 @@ function Settings() {
                 <div className="settings-container">
                     <div className="placeholder-setting">
                         <div>
-                            <h1>Password</h1>
+                            <h1>Email:  </h1>
                         </div>
                     </div>
                     <div className="placeholder-setting-modification">
-                        <Button>Change Password</Button>
+                        <Button>Change Email</Button>
                     </div>
                 </div>
                 <div className="settings-container">
                     <div className="placeholder-setting">
                         <div>
-                            <h1>Email: </h1>
+                            <h1>Password</h1>
                         </div>
                     </div>
                     <div className="placeholder-setting-modification">
-                        <Button>Change Email</Button>
+                        <Button>Change Password</Button>
                     </div>
                 </div>
             </div>
