@@ -6,7 +6,7 @@ class Input extends Component {
 
     render() {
         return (
-            <div className="input-field">
+            <div className={`input-field${!!this.props.className ? ` ${this.props.className}` : ""}`}>
                 <input
                     className={this.props.transparent ? "transparent-input" : "filled-input"}
                     placeholder={this.props.placeholder}
@@ -21,7 +21,8 @@ class Input extends Component {
 Input.propTypes = {
     placeholder: PropTypes.string.isRequired,
     onChange: PropTypes.func,
-    transparent: PropTypes.bool
+    transparent: PropTypes.bool,
+    className: PropTypes.string
 }
 
 export default Input;

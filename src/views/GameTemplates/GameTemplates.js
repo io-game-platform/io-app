@@ -19,7 +19,11 @@ class GameTemplates extends Component {
                     <div className='template-header'>
                         <Button className='new-template-button'>New Template</Button>
                         <h1 className="page-title">Templates</h1>
-                        <Input placeholder="Filter" transparent/>
+                        <Input
+                            className="filter-templates"
+                            placeholder="Filter"
+                            transparent={true}
+                        />
                     </div>
                     <div className='my-server'>
                         <div className='server-info'>

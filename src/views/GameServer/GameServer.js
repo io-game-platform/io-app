@@ -18,7 +18,7 @@ class GameServer extends Component {
 			<Fragment>
 				<h1 className="page-title">New Server Template</h1>
 				<div className='server-container'>
-					<Input placeholder="Server Title"/>
+					<Input className="server-title-input" placeholder="Server Title"/>
 					<div className='game-title'>
 						<h1>0 players ingame</h1>
 						<h1>Owned by username</h1>
@@ -32,7 +32,7 @@ class GameServer extends Component {
 								<span>Max players: 100</span>
 							</div>
 							<div className='field'>
-								<div className='value-left'>1 player</div>
+								<div className='value-lefFt'>1 player</div>
 								<input type='range' min='1' max='100' value='100' step='1'/>
 								<div className='value-right'>100 players</div>
 							</div>
