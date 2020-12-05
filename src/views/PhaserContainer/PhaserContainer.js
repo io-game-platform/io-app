@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 import Phaser from "phaser";
+import "./PhaserContainer.scss";
 
 class PhaserContainer extends Component {
 
@@ -19,6 +20,8 @@ class PhaserContainer extends Component {
                 console.error(`Game ${this.props.gameId} is missing config`);
             } else {
                 gameConfig.parent = "phaser-container";
+                gameConfig.width = window.innerWidth - 15;
+                gameConfig.height = window.innerHeight - 100;
                 this.setState({
                     game: new Phaser.Game(gameConfig)
                 });
@@ -35,7 +38,6 @@ class PhaserContainer extends Component {
     render() {
         return(
             <Fragment>
-                <h1>Phaser Container</h1>
                 <div id="phaser-container"/>
             </Fragment>
         );
