@@ -10,21 +10,31 @@ class Settings extends Component {
                 <div className="settings-container">
                     <div className="placeholder-setting">
                         <div>
-                            <h1>Account Setting</h1>
+                            <h1>Username: </h1>
                         </div>
                     </div>
                     <div className="placeholder-setting-modification">
-                        <Button>Something</Button>
+                        <Button>Change Username</Button>
                     </div>
                 </div>
                 <div className="settings-container">
                     <div className="placeholder-setting">
                         <div>
-                            <h1>Account Setting</h1>
+                            <h1>Email:  </h1>
                         </div>
                     </div>
                     <div className="placeholder-setting-modification">
-                        <Button>Something</Button>
+                        <Button>Change Email</Button>
+                    </div>
+                </div>
+                <div className="settings-container">
+                    <div className="placeholder-setting">
+                        <div>
+                            <h1>Password</h1>
+                        </div>
+                    </div>
+                    <div className="placeholder-setting-modification">
+                        <Button>Change Password</Button>
                     </div>
                 </div>
             </div>
