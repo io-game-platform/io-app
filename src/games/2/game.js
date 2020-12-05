@@ -31,11 +31,7 @@ export var config = {
     height: SCREEN_HEIGHT,
     backgroundColor: '#2d2d2d',
     parent: 'phaser-example',
-    physics: {default: 'arcade',
-        arcade: {
-            debug: true
-        }
-    },
+    physics: {default: 'arcade'},
     scene: {
         preload: preload,
         create: create,
