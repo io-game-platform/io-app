@@ -1,8 +1,8 @@
 import React from 'react'
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
-import { ReactComponent as MoonIcon } from './icons/moon.svg';
 import { ReactComponent as SunIcon } from './icons/sun.svg';
+import { ReactComponent as MoonIcon } from './icons/moon.svg';
 
 const ToggleContainer = styled.button`
   background: ${({ theme }) => theme.gradient};
@@ -12,7 +12,9 @@ const ToggleContainer = styled.button`
   display: flex;
   font-size: 0.5rem;
   justify-content: space-between;
-  margin: 0 auto;
+  // margin: 0 auto;
+  margin-left: auto;
+  margin-right: 3rem;
   overflow: hidden;
   padding: 0.5rem;
   position: relative;
@@ -26,12 +28,12 @@ const ToggleContainer = styled.button`
     
     // sun icon
     &:first-child {
-      transform: ${({ lightTheme }) => lightTheme ? 'translateY(0)' : 'translateY(100px)'};
+      // transform: ${({ lightTheme }) => lightTheme ? 'translateY(0)' : 'translateY(100px)'};
     }
     
     // moon icon
     &:nth-child(2) {
-      transform: ${({ lightTheme }) => lightTheme ? 'translateY(-100px)' : 'translateY(0)'};
+      // transform: ${({ lightTheme }) => lightTheme ? 'translateY(-100px)' : 'translateY(0)'};
     }
   }
 `;
