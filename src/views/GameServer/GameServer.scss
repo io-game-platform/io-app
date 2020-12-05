@@ -1,7 +1,7 @@
 @import "../../index";
 
 .template-title {
-    color: $color-white;
+    // color: $color-white;
     font-size: 2rem
 }
 
@@ -24,12 +24,12 @@
             border-radius: 4px 0 0 4px;
             box-shadow: 6px 6px 14px -5px rgba(0, 0, 0, 0.5);
             background-color: transparent;
-            color: white;
+            // color: white;
         }
     }
 
     .game-title {
-        color: $color-white;
+        // color: $color-white;
         h1 { font-size: 100%; }
         h2 { font-size: 120%; }
     }
@@ -40,7 +40,7 @@
 }
 
 .game-select {
-    color: $color-white;
+    // color: $color-white;
 
     #slider {
         -webkit-appearance: none;
