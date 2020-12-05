@@ -6,7 +6,7 @@ import GameCatalog from "./views/GameCatalog";
 import GameDetails from "./views/GameDetails/GameDetails";
 import GameServer from './views/GameServer/GameServer';
 import GameTemplates from './views/GameTemplates/GameTemplates';
-import LoginPage from "./views/LoginPage";
+import LoginPage from "./views/LoginPage/LoginPage";
 import PhaserContainer from "./views/PhaserContainer/PhaserContainer";
 import About from "./views/About/About";
 

@@ -1,4 +1,4 @@
-const siteName = "http://localhost:8081";
+const siteName = "https://io.binaryaura.net/api";
 
 class ApiClient {
 
