@@ -10,6 +10,9 @@
   color: $color-white;
   font-size: 1em;
   box-shadow: 6px 6px 14px -5px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  font-family: $font-primary;
+  font-weight: 900;
 
   &:hover {
     background-color: $color-primary-light;
