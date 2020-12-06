@@ -573,7 +573,7 @@ function create ()
         fontSize: '14px',
         fixedWidth: 140,
         fixedHeight: 20,
-        //valign: 'center'
+        valign: 'center'
     })
         .setOrigin(0.5)
         .setInteractive()
@@ -583,8 +583,8 @@ function create ()
             }
             var editbox = this.plugins.get('rextexteditplugin').edit(name_input);
 
-            editbox.inputText.x = center_x;
-            editbox.inputText.y = center_y;
+            editbox.inputText.x = window.innerWidth * window.devicePixelRatio / 2;
+            editbox.inputText.y = center_y-15;
         }, this);
 
     respawn_button = this.add.sprite(center_x, center_y+25, 'button', 0);
