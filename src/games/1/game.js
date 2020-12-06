@@ -583,8 +583,8 @@ function create ()
             }
             editbox = this.plugins.get('rextexteditplugin').edit(name_input);
 
-            editbox.inputText.x = window.innerWidth * window.devicePixelRatio / 2;
-            editbox.inputText.y = center_y-15;
+            editbox.inputText.x = center_x;
+            editbox.inputText.y = center_y-12;
         }, this);
 
     respawn_button = this.add.sprite(center_x, center_y+25, 'button', 0);
