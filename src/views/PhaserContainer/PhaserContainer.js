@@ -35,7 +35,7 @@ class PhaserContainer extends Component {
     render() {
         return(
             <Fragment>
-                <h1>Phaser Container</h1>
+                <h1></h1>
                 <div id="phaser-container"/>
             </Fragment>
         );
