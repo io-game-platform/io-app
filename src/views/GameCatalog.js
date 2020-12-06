@@ -33,7 +33,7 @@ class GameCatalog extends Component {
                         description={game.description || "Test description"}
                         updated={game.updated || "10/23/2020"}/>
                 )) :
-                    <p>No games to show.</p>}
+                    <p style={{color: "white"}}>No games to show</p>}
             </Fragment>
         );
     }
