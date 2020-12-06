@@ -484,13 +484,13 @@ function create ()
 
     var initial_text = 'Enter name here';
 
+    var editbox = null;
     // https://codepen.io/rexrainbow/pen/GaxqLZ?editors=0010
     name_input = this.add.rexBBCodeText(center_x, center_y-12, initial_text, {
         color: 'white',
         fontSize: '14px',
         fixedWidth: 140,
         fixedHeight: 20,
-        //valign: 'center'
     })
         .setOrigin(0.5)
         .setInteractive()
@@ -498,10 +498,10 @@ function create ()
             if (name_input.text === initial_text){
                 name_input.text = '';
             }
-            var editbox = this.plugins.get('rextexteditplugin').edit(name_input);
+            editbox = this.plugins.get('rextexteditplugin').edit(name_input);
 
             editbox.inputText.x = center_x;
-            editbox.inputText.y = center_y;
+            editbox.inputText.y = center_y-12;
         }, this);
 
     respawn_button = this.add.sprite(center_x, center_y+25, 'button', 0);
@@ -510,6 +510,9 @@ function create ()
         var player_name = 'Coolest Player';
         if (!(name_input.text === initial_text)){
             player_name = name_input.text;
+        }
+        if(editbox !== null){
+            editbox.close()
         }
 
         player_main = players.get(true, player_name);
