@@ -9,7 +9,8 @@ class GameTemplates extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            templates: []
+            templates: [],
+            viewableTemplates: [],
         }
     }
 
@@ -17,7 +18,8 @@ class GameTemplates extends Component {
         await ApiClient.get("/templates")
             .then(templates => {
                 this.setState({
-                    templates: templates
+                    templates: templates,
+                    viewableTemplates: templates
                 });
             });
     }
@@ -33,10 +35,19 @@ class GameTemplates extends Component {
                             className="filter-templates"
                             placeholder="Filter"
                             transparent={true}
+                            onChange={(e) => {
+                                const query = e.target.value;
+                                if (!!query && query.trim().length > 0) {
+                                    const filteredTemplates = this.state.templates.filter(template => template.name.includes(query.trim()));
+                                    this.setState({
+                                        viewableTemplates: filteredTemplates
+                                    });
+                                }
+                            }}
                         />
                     </div>
-                    {this.state.templates.length === 0 && <p className="empty-notifier">No templates to show</p>}
-                    {this.state.templates.map(template => {
+                    {this.state.viewableTemplates.length === 0 && <p className="empty-notifier">No templates to show</p>}
+                    {this.state.viewableTemplates.map(template => {
                         return (
                             <div key={template.id} className="my-server">
                                 <div className='server-info'>
