@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Phaser from "phaser";
 import "./PhaserContainer.scss";
 
+const FULLSCREEN = false;
+
 class PhaserContainer extends Component {
 
     constructor(props) {
@@ -20,8 +22,10 @@ class PhaserContainer extends Component {
                 console.error(`Game ${this.props.gameId} is missing config`);
             } else {
                 gameConfig.parent = "phaser-container";
-                gameConfig.width = window.innerWidth - 15;
-                gameConfig.height = window.innerHeight - 100;
+                if(FULLSCREEN) {
+                    gameConfig.width = window.innerWidth - 15;
+                    gameConfig.height = window.innerHeight - 100;
+                }
                 this.setState({
                     game: new Phaser.Game(gameConfig)
                 });
