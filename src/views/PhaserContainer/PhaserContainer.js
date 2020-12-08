@@ -42,7 +42,8 @@ class PhaserContainer extends Component {
     render() {
         return(
             <Fragment>
-                <div id="phaser-container"/>
+                <h1></h1>
+                <center><div id="phaser-container" style={{"width": "800px", "height": "600px"}}/></center>
             </Fragment>
         );
     }
