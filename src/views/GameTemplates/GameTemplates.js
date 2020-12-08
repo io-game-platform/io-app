@@ -42,6 +42,10 @@ class GameTemplates extends Component {
                                     this.setState({
                                         viewableTemplates: filteredTemplates
                                     });
+                                } else {
+                                    this.setState({
+                                        viewableTemplates: this.state.templates
+                                    });
                                 }
                             }}
                         />

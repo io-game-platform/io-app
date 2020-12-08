@@ -40,6 +40,10 @@ class GameCatalog extends Component {
                                 this.setState({
                                     viewableGames: filteredGames
                                 });
+                            } else {
+                                this.setState({
+                                    viewableGames: this.state.games
+                                });
                             }
                         }}
                     />
