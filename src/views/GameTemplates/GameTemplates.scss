@@ -3,6 +3,11 @@
 .page-container {
     margin-left: 40px;
     margin-right: 40px;
+
+    .empty-notifier {
+        color: $color-white;
+    }
+
 }
 
 .template-header {
