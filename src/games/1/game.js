@@ -411,6 +411,9 @@ class Leaderboard {
             e[1].setScrollFactor(0, 0);
 
             this.entry[i] = e;
+
+            e[0].setDepth(2);
+            e[1].setDepth(2);
         }
     }
 
