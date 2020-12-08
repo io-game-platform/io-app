@@ -40,6 +40,11 @@ class GameCatalog extends Component {
                                 this.setState({
                                     viewableGames: filteredGames
                                 });
+                            } else {
+                                const filteredGames = this.state.games.filter(game => game.title.toLowerCase().includes(query.trim().toLowerCase()));
+                                this.setState({
+                                    viewableGames: this.state.games
+                                });
                             }
                         }}
                     />
