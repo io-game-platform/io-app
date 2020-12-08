@@ -17,6 +17,7 @@ class Button extends Component {
 
 Button.propTypes = {
     className: PropTypes.string,
+    onClick: PropTypes.func,
     link: PropTypes.string
 }
 

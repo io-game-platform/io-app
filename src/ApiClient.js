@@ -10,11 +10,12 @@ class ApiClient {
         }).then(responseHandler());
     }
 
-    static post(route) {
+    static post(route, body) {
         const url = `${siteName}${route}`
         return fetch(url, {
             method: 'POST',
-            headers: headers()
+            headers: headers(),
+            body: body ? JSON.stringify(body) : undefined
         }).then(responseHandler(url));
     }
 
