@@ -36,7 +36,7 @@ class GameCatalog extends Component {
                         onChange={(e) => {
                             const query = e.target.value;
                             if (!!query && query.trim().length > 0) {
-                                const filteredGames = this.state.games.filter(game => game.title.includes(query.trim()));
+                                const filteredGames = this.state.games.filter(game => game.title.toLowerCase().includes(query.trim().toLowerCase()));
                                 this.setState({
                                     viewableGames: filteredGames
                                 });

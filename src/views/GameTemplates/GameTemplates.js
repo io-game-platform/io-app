@@ -38,7 +38,7 @@ class GameTemplates extends Component {
                             onChange={(e) => {
                                 const query = e.target.value;
                                 if (!!query && query.trim().length > 0) {
-                                    const filteredTemplates = this.state.templates.filter(template => template.name.includes(query.trim()));
+                                    const filteredTemplates = this.state.templates.filter(template => template.name.toLowerCase().includes(query.trim().toLowerCase()));
                                     this.setState({
                                         viewableTemplates: filteredTemplates
                                     });
