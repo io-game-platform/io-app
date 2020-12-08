@@ -29,10 +29,10 @@ class GameCatalog extends Component {
                 this.state.games.map(game => (
                     <GameCard
                         key={game.id}
-                        id={game.id || "-1"}
-                        name={game.name || "Game Title"}
-                        description={game.description || "Test description"}
-                        updated={game.updated || "10/23/2020"}/>
+                        id={game.id}
+                        name={game.name}
+                        description={game.description}
+                        updated={game.updated}/>
                 )) :
                     <p>No games to show.</p>}
             </Fragment>
