@@ -17,12 +17,20 @@ class GameDetails extends Component {
     }
 
     async componentDidMount() {
-        const gameBanner = require(`../../games/${this.props.gameId}/game-banner.png`);
+        try {
+            const gameBanner = require(`../../games/${this.props.gameId}/game-banner.png`);
+            if (gameBanner) {
+                this.setState({
+                    image: gameBanner
+                })
+            }
+        } catch (e) {
+            console.warn(`${e.message}: The game of id ${this.props.id} does not have game-banner.png`);
+        }
         await ApiClient.get(`/games/${this.props.gameId}`)
             .then(game => {
                 this.setState({
-                    game: game,
-                    image: gameBanner
+                    game: game
                 });
             });
     }
