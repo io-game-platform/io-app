@@ -46,7 +46,9 @@ class GameDetails extends Component {
                     <div>
                         <h2>Local</h2>
                         <p>Play singleplayer or create a new game server.</p>
-                        <Button link="/play/1">Singleplayer</Button>
+                        <a href={`io.binaryaura.net/play/${this.props.gameId}`}>
+                            <Button link={`/play/${this.props.gameId}`}>Singleplayer</Button>
+                        </a>
                         <Button className="create-server-button">Create Server</Button>
                     </div>
                 </div>
