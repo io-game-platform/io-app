@@ -1,26 +1,41 @@
 @import "../../index";
 
-.game-image {
+.image-header {
   height: 300px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-content: center;
-  background-color: #3b6470;
   justify-content: center;
+  background-color: #2d2d2d;
 
-  h1 {
-    color: $color-white;
-    align-self: center;
-    font-size: 4rem;
+  .header-image {
+    height: 300px;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
   }
-}
 
-.game-data {
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  color: $color-white;
+  .header-content {
+    width: 100%;
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1 {
+      color: $color-white;
+      align-self: center;
+      font-size: 4rem;
+    }
+
+    .game-data {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      color: $color-white;
+    }
+
+  }
 }
 
 .game-description {
@@ -36,7 +51,7 @@
   justify-content: space-evenly;
   color: $color-white;
 
-  div {
+  .game-mode-section {
     min-width: 400px;
     display: flex;
     flex-direction: column;
@@ -47,26 +62,7 @@
     border-bottom: 1px solid white;
   }
 
-  .input-field {
-    display: flex;
-    flex-direction: row;
-
-    input {
-      padding: 20px;
-      width: 70%;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px 0 0 4px;
-      box-shadow: 6px 6px 14px -5px rgba(0, 0, 0, 0.5);
-    }
-
-    button {
-      width: 30%;
-      border-radius: 0 4px 4px 0;
-    }
-  }
-
-  .create-server-button, .input-field {
+  .create-server-button, .code-input {
     margin-top: 20px;
   }
 

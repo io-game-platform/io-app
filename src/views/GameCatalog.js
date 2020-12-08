@@ -24,7 +24,7 @@ class GameCatalog extends Component {
     render() {
         return (
             <Fragment>
-                <h1 style={{color: "white"}}>Game Catalog</h1>
+                <h1 className="page-title">Game Catalog</h1>
                 {this.state.games.length > 0 ?
                 this.state.games.map(game => (
                     <GameCard
@@ -34,7 +34,7 @@ class GameCatalog extends Component {
                         description={game.description}
                         updated={game.updated}/>
                 )) :
-                    <p>No games to show.</p>}
+                    <p style={{color: "white"}}>No games to show</p>}
             </Fragment>
         );
     }

@@ -11,7 +11,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     color: $color-white;
 
-    .new-template-button, h1, .input-field {
+    .new-template-button, h1, .filter-templates {
         align-self: center;
     }
 
@@ -23,29 +23,23 @@
         font-size: 3rem;
     }
 
-    .input-field {
-        input {
-            height: 50px;
-            width: 250px;
-            font-size: 1rem;
-            border-color: white;
-            background-color: transparent;
-            color: white;
-            padding-left: 0.5em;
-            padding-right: 0.5em;
-        }
+    .filter-templates {
+        height: 40px;
+        width: 70%;
+        justify-self: flex-end;
     }
 }
 
 .my-server {
     display: flex;
     align-items: center;
-
     justify-content: space-between;
-
     border-bottom: 1px solid #242424;
     padding: 10px 30px;
     color: $color-white;
+    background-color: $color-background-dark;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
 
     .server-info {
         text-align: left;

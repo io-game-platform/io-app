@@ -1,6 +1,9 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
 import Phaser from "phaser";
+import "./PhaserContainer.scss";
+
+const FULLSCREEN = false;
 
 class PhaserContainer extends Component {
 
@@ -19,6 +22,10 @@ class PhaserContainer extends Component {
                 console.error(`Game ${this.props.gameId} is missing config`);
             } else {
                 gameConfig.parent = "phaser-container";
+                if(FULLSCREEN) {
+                    gameConfig.width = window.innerWidth - 15;
+                    gameConfig.height = window.innerHeight - 100;
+                }
                 this.setState({
                     game: new Phaser.Game(gameConfig)
                 });
@@ -35,8 +42,7 @@ class PhaserContainer extends Component {
     render() {
         return(
             <Fragment>
-                <h1></h1>
-                <center><div id="phaser-container" style={{"width": "800px", "height": "600px"}}/></center>
+                <div id="phaser-container"/>
             </Fragment>
         );
     }

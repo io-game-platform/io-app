@@ -1,0 +1,157 @@
+@import "../../index";
+
+.login-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  height: 80vh;
+  padding-bottom: 100px;
+  background: radial-gradient($color-background 10%, #17171c 70%) -25vw -10vh no-repeat #17171c;
+
+  .login-content-left {
+    width: 100%;
+    height: 100%;
+
+    h1 {
+      font-size: 4em;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: 8rem;
+      margin-top: 0;
+      font-family: $font-primary;
+    }
+
+    img {
+      justify-self: center;
+      width: 40%;
+    }
+  }
+
+  .login-content-right {
+    grid-row: 1;
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .login-title {
+      margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+      color: $color-white;
+      font-size: 1.2em;
+      margin-top: 0;
+      margin-bottom: 3rem;
+    }
+
+    .dev-checkbox {
+      width: 60%;
+      align-self: center;
+      margin-bottom: 1rem;
+      color: $color-white;
+    }
+
+    .login-input {
+      width: 60%;
+      margin-bottom: 20px;
+      align-self: center;
+    }
+
+    .google-login-button {
+      background-color: $color-primary !important;
+      color: $color-white !important;
+      padding: 10px !important;
+      border-radius: 4px !important;
+      font-size: 1em !important;
+      font-family: $font-primary !important;
+      font-weight: 900 !important;
+      text-transform: uppercase;
+      transition-duration: 0.2s;
+      width: 60%;
+      align-self: center;
+
+      &:hover {
+        background-color: $color-primary-light !important;
+      }
+
+    }
+
+    .google-login-button > div {
+      width: 20px;
+      height: 20px;
+      border-radius: 20px !important;
+      margin-right: 20px !important;
+    }
+
+  }
+
+  .link-button {
+    margin-top: 2rem;
+    background: none;
+    border: none;
+    color: $color-primary-light;
+    cursor: pointer;
+    font-size: 1.2em;
+    position: relative;
+    transition-duration: 0.2s;
+    align-self: center;
+    padding: 4px 4px 2px 4px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: $color-primary-light;
+      visibility: hidden;
+      transform: scaleX(0);
+      transition: all 0.2s ease-in-out 0s;
+    }
+
+    &:hover {
+      color: $color-primary-light
+    }
+
+    &:hover::before {
+      visibility: visible;
+      transform: scaleX(1);
+    }
+  }
+
+}
+
+.fade-out {
+  animation: fadeOut ease 0.7s;
+}
+
+.fade-in {
+  animation: fadeIn ease 0.7s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
