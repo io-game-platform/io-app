@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:gameId', async (req, res, next) => {
     try {
-	console.log('Game info request for: ' + gameId)
+	console.log('Game info request for: ' + req.params.gameId)
         if (req.params.gameId) {
             const gameId = req.params.gameId;
             const game = await GameData.getGameById(gameId);
