@@ -50,14 +50,14 @@ class GameCatalog extends Component {
                 </div>
                 <div className="card-grid">
                     {this.state.viewableGames.length > 0 ?
-                    this.state.viewableGames.map(game => (
-                        <GameCard
-                            key={game.id}
-                            id={game.id}
-                            name={game.title}
-                            description={game.description}
-                            updated={game.updated}/>
-                    )) :
+                        this.state.viewableGames.map(game => (
+                            <GameCard
+                                key={game.id}
+                                id={game.id}
+                                name={game.title}
+                                description={game.description}
+                                updated={game.updated}/>
+                        )) :
                         <p className="empty-notifier">No games to show</p>}
                 </div>
             </Fragment>
