@@ -11,15 +11,18 @@ class GameDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            game: null
+            game: null,
+            image: null,
         }
     }
 
     async componentDidMount() {
+        const gameBanner = require(`../../games/${this.props.gameId}/game-banner.png`);
         await ApiClient.get(`/games/${this.props.gameId}`)
             .then(game => {
                 this.setState({
-                    game: game
+                    game: game,
+                    image: gameBanner
                 });
             });
     }
@@ -28,16 +31,19 @@ class GameDetails extends Component {
         return (
             <Fragment>
                 <div className="image-header">
-                    <img className="header-image" src={GameBanner} alt="Game Banner"/>
+                    {!!this.state.image ?
+                        <img className="header-image" src={this.state.image} alt="Game Banner"/> :
+                        <div className="header-background"/>
+                    }
                     <div className="header-content">
-                        <h1 className="page-title">{this.state.game.title}</h1>
+                        <h1 className="page-title">{!!this.state.game ? this.state.game.title : "Game"}</h1>
                         <div className="game-data">
                             <h3>0 players online</h3>
-                            <h3>Last updated {this.state.game.updated}</h3>
+                            <h3>Last updated {!!this.state.game ? this.state.game.updated : "12/7/2020"}</h3>
                         </div>
                     </div>
                 </div>
-                <p className="game-description">{this.state.game.description}</p>
+                <p className="game-description">{!!this.state.game && this.state.game.description}</p>
                 <div className="game-mode-container">
                     <div className="game-mode-section">
                         <h2>Online</h2>
@@ -52,9 +58,7 @@ class GameDetails extends Component {
                     <div className="game-mode-section">
                         <h2>Local</h2>
                         <p>Play singleplayer or create a new game server.</p>
-                        <a href={`io.binaryaura.net/play/${this.props.gameId}`}>
-                            <Button link={`/play/${this.props.gameId}`}>Singleplayer</Button>
-                        </a>
+                        <a className="singleplayer-button" href={`/play/${this.props.gameId}`}>Singleplayer</a>
                         <Button className="create-server-button">Create Server</Button>
                     </div>
                 </div>
