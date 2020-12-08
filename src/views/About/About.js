@@ -32,19 +32,19 @@ class About extends Component {
                     Often these games area sort 100-player free-for-all competition in which there is a single winner.
                     In other cases, leaderboards track the top players, and the players try to reach the top for as long as possible.
                 </p>
-                <p>The io.io platform was designed to host a variety of games using a common framework. Our mission is twofold:
-                    <ul>
-                        <li>Provide a space where players can conveniently search for and play games</li>
-                        <li>Develop an intuitive, easy-to-use set of tools to develop .io games</li>
-                    </ul>
-                </p>
+                <p>The io.io platform was designed to host a variety of games using a common framework. Our mission is twofold:</p>
+                <ul>
+                    <li>Provide a space where players can conveniently search for and play games</li>
+                    <li>Develop an intuitive, easy-to-use set of tools to develop .io games</li>
+                </ul>
                 <p>This project is entirely open source, so feel free to check out our GitHub repositories for the <a className="text-link" target="_blank" rel="noopener noreferrer" href="https://github.com/io-game-platform/io.io">games</a> or the <a className="text-link" target="_blank" rel="noopener noreferrer" href="https://github.com/io-game-platform/io.io">app</a>.</p>
                 <h3>Contributors</h3>
                 <hr/>
                 <div className="contributors-container">
                     {contributors.map((contributor) => {
                         return (
-                            <a className="contributor-card"
+                            <a key={contributor.name}
+                               className="contributor-card"
                                target="_blank"
                                rel="noopener noreferrer"
                                href={`https://github.com/${contributor.github}`}>
