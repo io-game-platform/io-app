@@ -21,9 +21,7 @@ class NewTemplate extends Component {
     render() {
 		return (
 			<Fragment>
-				<div className='template-title'>
-					<h1>New Server Template</h1>
-				</div>
+				<h1 className="page-title">New Server Template</h1>
 				<div className='server-container'>
 					<div>
 						<div className='input-field'>

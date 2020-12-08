@@ -4,18 +4,28 @@ import "./GameDetails.scss";
 import Button from "../../components/Button/Button";
 import ApiClient from "../../ApiClient";
 import InputWithButton from "../../components/InputWithButton/InputWithButton";
-import GameBanner from "../../games/1/game-banner.png";
 
 class GameDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            game: null
+            game: null,
+            image: null,
         }
     }
 
     async componentDidMount() {
+        try {
+            const gameBanner = require(`../../games/${this.props.gameId}/game-banner.png`);
+            if (gameBanner) {
+                this.setState({
+                    image: gameBanner
+                })
+            }
+        } catch (e) {
+            console.warn(`${e.message}: The game of id ${this.props.id} does not have game-banner.png`);
+        }
         await ApiClient.get(`/games/${this.props.gameId}`)
             .then(game => {
                 this.setState({
@@ -28,16 +38,19 @@ class GameDetails extends Component {
         return (
             <Fragment>
                 <div className="image-header">
-                    <img className="header-image" src={GameBanner} alt="Game Banner"/>
+                    {!!this.state.image ?
+                        <img className="header-image" src={this.state.image} alt="Game Banner"/> :
+                        <div className="header-background"/>
+                    }
                     <div className="header-content">
-                        <h1 className="page-title">{!!this.state.game ? this.state.game.name : "Game Title"}</h1>
+                        <h1 className="page-title">{!!this.state.game ? this.state.game.title : "Game"}</h1>
                         <div className="game-data">
                             <h3>0 players online</h3>
-                            <h3>Last updated 10/16/2020</h3>
+                            <h3>Last updated {!!this.state.game ? this.state.game.updated : "12/7/2020"}</h3>
                         </div>
                     </div>
                 </div>
-                <p className="game-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur nulla ex, ut sagittis tellus ornare ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque lacinia scelerisque nulla quis bibendum. Mauris dui mi, fringilla non eros ac, faucibus faucibus orci. Maecenas elit augue, malesuada a dignissim varius, efficitur a felis. Fusce rutrum aliquam nisl, sit amet convallis turpis blandit et. Phasellus euismod eget dolor auctor ultricies. Duis ullamcorper non elit id aliquam. Aliquam ultricies dolor vel felis convallis facilisis. In eget orci sit amet purus faucibus pretium nec vitae tortor. Mauris id eros nisl. In nec urna sollicitudin, eleifend nibh vitae, bibendum est. Fusce placerat enim non dapibus suscipit. Etiam vitae fermentum ex, vel aliquet ex.</p>
+                <p className="game-description">{!!this.state.game && this.state.game.description}</p>
                 <div className="game-mode-container">
                     <div className="game-mode-section">
                         <h2>Online</h2>
@@ -52,9 +65,7 @@ class GameDetails extends Component {
                     <div className="game-mode-section">
                         <h2>Local</h2>
                         <p>Play singleplayer or create a new game server.</p>
-                        <a href={`io.binaryaura.net/play/${this.props.gameId}`}>
-                            <Button link={`/play/${this.props.gameId}`}>Singleplayer</Button>
-                        </a>
+                        <a className="singleplayer-button" href={`/play/${this.props.gameId}`}>Singleplayer</a>
                         <Button className="create-server-button">Create Server</Button>
                     </div>
                 </div>
