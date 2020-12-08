@@ -48,7 +48,12 @@
     color: $color-white;
 
     .server-info {
-        h1 { font-size: 120%; }
-        h2 { font-size: 110%; }
+        text-align: left;
+        h1 { font-size: 130%; }
+        h2 { font-size: 100%; }
+    }
+
+    .server-buttons Button {
+        margin-left: 10px;
     }
 }
