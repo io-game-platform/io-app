@@ -2,13 +2,15 @@ import React, {Component, Fragment} from "react";
 import GameCard from "../../components/GameCard/GameCard";
 import ApiClient from "../../ApiClient";
 import "./GameCatalog.scss";
+import Input from "../../components/Input/Input";
 
 class GameCatalog extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            games: []
+            games: [],
+            viewableGames: []
         }
     }
 
@@ -16,7 +18,8 @@ class GameCatalog extends Component {
         await ApiClient.get("/games")
             .then(games => {
                 this.setState({
-                    games: games
+                    games: games,
+                    viewableGames: games
                 });
             });
     }
@@ -24,10 +27,26 @@ class GameCatalog extends Component {
     render() {
         return (
             <Fragment>
-                <h1 className="page-title">Game Catalog</h1>
+                <div className="catalog-header">
+                    <h1 className="page-title">Game Catalog</h1>
+                    <Input
+                        className="filter-games"
+                        placeholder="Filter"
+                        transparent={true}
+                        onChange={(e) => {
+                            const query = e.target.value;
+                            if (!!query && query.trim().length > 0) {
+                                const filteredGames = this.state.games.filter(game => game.title.includes(query.trim()));
+                                this.setState({
+                                    viewableGames: filteredGames
+                                });
+                            }
+                        }}
+                    />
+                </div>
                 <div className="card-grid">
-                    {this.state.games.length > 0 ?
-                    this.state.games.map(game => (
+                    {this.state.viewableGames.length > 0 ?
+                    this.state.viewableGames.map(game => (
                         <GameCard
                             key={game.id}
                             id={game.id}
