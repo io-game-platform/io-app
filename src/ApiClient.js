@@ -31,6 +31,7 @@ function headers() {
 function responseHandler() {
     return async (resp) => {
         const text = await resp.text();
+	console.log("Database Response: " + text)
 
         if(!resp.ok) {
             let errorBody = 'error';
@@ -47,6 +48,7 @@ function responseHandler() {
 
         } else {
             if(text) {
+		console.log("JSON: " + JSON.parse(text))
                 return JSON.parse(text);
             } else {
                 return null;

@@ -4,23 +4,25 @@ import Phaser from "phaser";
 var SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
 var MAP_WIDTH = 4000, MAP_HEIGHT = 3000;
 var center_x = SCREEN_WIDTH / 2, center_y = SCREEN_HEIGHT / 2;
-
 var maxPlayers = 3;
 var maxBots = 12;
-var maxBullets = 200;
+
+var maxPoints = 150;
 
 var reloadTime = 500;
 var BLAST_SIZE = 4;
 var BOT_RANGE = 300;
+var HITBOX_SCALE = .8;
 
 //
-var players, bots, bullets;
-var respawn_button, name_input;
+var players, bots, points;
+var respawn_button, name_input, game_name, ui_rect;
 var leaderboard, ui_rect, game_name;
 
 var player_main;
-var numBots = 0, reloadingUntil = 0;
-var leftDown = false, middleDown = false;
+var worldScale = 0, textScale = 1, zoomLevel = 1;
+var numBots = 0, reloadingUntil = 0, numPoints = 0;
+var leftDown = false, rightDown = false, scaleChange = false;
 var mouseX = 0, mouseY = 0;
 
 export var config = {
@@ -40,93 +42,23 @@ export var config = {
     },
 };
 
-
-//var game = new Phaser.Game(config);
-
-
-var Bullet = new Phaser.Class({
-
-    Extends: Phaser.GameObjects.Image,
-
-    initialize: function Bullet (scene, owner, owner_ref, sprite, lifespan)
-    {
-        Phaser.GameObjects.Image.call(this, scene, 0, 0, sprite);
-        this.incX = 0;
-        this.incY = 0;
-        this._owner = owner;
-        this.owner_ref = owner_ref;
-        this.lifespan = lifespan;
-        this.speed = Phaser.Math.GetSpeed(600, 1);
-    },
-
-    get_owner: function ()
-    {
-        return this._owner
-    },
-
-    fire: function (x, y, init_x, init_y)
-    {
-        this.setActive(true);
-        this.setVisible(true);
-
-        this.setPosition(init_x, init_y);
-
-        var angle = Phaser.Math.Angle.Between(x, y, init_x, init_y);
-
-        this.setRotation(angle);
-
-        this.incX = Math.cos(angle);
-        this.incY = Math.sin(angle);
-    },
-    
-    fanned_fire: function (x, y, init_x, init_y, i, n)
-    {
-        this.setActive(true);
-        this.setVisible(true);
-
-        this.setPosition(init_x, init_y);
-
-        var angle = Phaser.Math.Angle.Between(x, y, init_x, init_y) + (Math.PI / 4) - ((i/n) * Math.PI / 2);
-
-        this.setRotation(angle);
-
-        this.incX = Math.cos(angle);
-        this.incY = Math.sin(angle);
-    },
-
-    update: function (time, delta)
-    {
-        this.lifespan -= delta;
-
-        this.x -= this.incX * (this.speed * delta);
-        this.y -= this.incY * (this.speed * delta);
-
-        if (this.lifespan <= 0)
-        {
-            this.destroy();
-        }
-    },
-
-    destroy_bullet: function()
-    {
-        this.destroy();
-    }
-});
-
-
 var Bot = new Phaser.Class({
 
-    Extends: Phaser.GameObjects.Image,
+    Extends: Phaser.GameObjects.Ellipse,
 
-    initialize: function Bot (scene, name = 'Bot')
+    initialize: function Bot (scene, name)
     {
-        Phaser.GameObjects.Image.call(this, scene, Phaser.Math.Between(-1000000,0), Phaser.Math.Between(-1000000,0), 'ship');
+        var color = new Phaser.Display.Color();
+        color.random();
+        Phaser.GameObjects.Ellipse.call(this, scene, Phaser.Math.Between(-1000000,0), Phaser.Math.Between(-1000000,0), 25, 25, color.color);
         this.setDepth(1);
+        this._growthRate = .9;
         this._name = name;
-        this._score = 0;
+        this._score = Phaser.Math.Between(5, 20);
+        this._scale = 1;
 
-        this.type = Phaser.Math.Between(0, 1);
-        this.speed = Phaser.Math.GetSpeed(400, 1);
+        this.type = 0;//Phaser.Math.Between(0, 1);
+        this.speed = 2//Phaser.Math.GetSpeed(400, 1);
         this.start_x = 0;
         this.start_y = 0;
 
@@ -141,21 +73,19 @@ var Bot = new Phaser.Class({
         this.setVisible(true);
         this.start_x = start_x;
         this.start_y = start_y;
-        if (this.type == 0) {  // Square
-            this._init_square();
-        } else if (this.type == 1) {  // Circle 8
-            this._init_eight();
+
+        if (this.type == 0) {
+            this._init_chase();
         }
     },
 
     update: function (time, delta)
     {
+        this.resize()
         this._update_name();
 
         if (this.type == 0) {
-            this._move_square(this.time);
-        } else if (this.type == 1) {
-            this._move_eight(this.time);
+            this._move_chase(this.time);
         }
 
         this.x = Math.max(0, Math.min(MAP_HEIGHT, this.x));
@@ -164,25 +94,9 @@ var Bot = new Phaser.Class({
         this.time += 1;
     },
 
-    fire: function (x, y, time, lifespan)
-    {
-        /* Fire single bullet. */
-        var bullet = bullets.get(this._name, this, 'bullet1', lifespan);
-
-        bullet.fire(x, y, this.x, this.y);
-        this.reloadingUntil = time + reloadTime;
-    },
-
-    blast: function (x, y, time)
-    {
-        /* Fire blast of BLAST_SIZE bullets. */
-        var bullet;
-        for(var i=0; i<BLAST_SIZE+1; i++)
-        {
-            bullet = bullets.get(this._name, this, 'bullet2', 400)
-            bullet.fanned_fire(mouseX, mouseY, this.x, this.y, i, BLAST_SIZE)
-        }
-        this.reloadingUntil = time + reloadTime;
+    _list_ships () {
+        // make a combined list of all bots and players
+        return bots.getChildren().concat(players.getChildren());
     },
 
     _show_name: function (scene)
@@ -193,7 +107,8 @@ var Bot = new Phaser.Class({
         this.name.setFontSize(24);
         this.name.setActive(true);
         this.name.setVisible(true);
-        this.nameOffset = this.name.width/2;
+        this.nameOffsetX = this.name.width/2;
+        this.nameOffsetY = this.height/2;
     },
 
     _hide_name: function (scene)
@@ -204,112 +119,77 @@ var Bot = new Phaser.Class({
 
     _update_name: function ()
     {
-        this.name.setPosition(this.x-this.nameOffset, this.y+60)
+        this.name.setPosition(this.x-this.nameOffsetX, this.y+this.nameOffsetY)
+        this.name.setScale(textScale);
     },
 
-    _init_square: function ()
+    _init_chase: function ()
     {
-        /* Init for square movement pattern. */
-        this.side_len = Phaser.Math.Between(100, 200);
         this.time = Phaser.Math.Between(0, 100);
 
         this.setPosition(this.start_x, this.start_y);
-
-        var i;
-        for (i = 0; i < this.time; i++){
-            this._move_square(i);
-        }
     },
 
-    _move_square: function (time)
+    _move_chase: function (time)
     {
-        /* Update for square movement pattern. */
-        var timed_side_len = this.side_len / this.speed;
-        var i = time % (timed_side_len * 4);
+        var nearest_bot = 0;
+        var min_distance = 10000000000;
 
-        if (i < timed_side_len) {
-            this.y += this.speed;
-            this.setRotation(Math.PI);
-        } else if (i < timed_side_len * 2) {
-            this.x += this.speed;
-            this.setRotation(Math.PI / 2);
-        } else if (i < timed_side_len * 3) {
-            this.y -= this.speed;
-            this.setRotation(0);
-        } else {
-            this.x -= this.speed;
-            this.setRotation(Math.PI * 3 / 2);
-        }
-    },
+        var ships = this._list_ships();
+        var opponent
+        for (var i = 0; i < ships.length; i++){
+            opponent = ships[i];
 
-    _init_eight: function ()
-    {
-        /* Init for circle eight movement pattern. */
-        this.diameter = Phaser.Math.Between(100, 500);
-        this.step_value = 144;
-        this.step = Math.PI / this.step_value;
+            if(opponent != null && opponent._score < this._score){
 
-        this.time = Phaser.Math.Between(0, 100);
+                var distance = Math.pow(Math.pow(this.x - opponent.x, 2) + Math.pow(this.y - opponent.y, 2), .5);
 
-        this.setPosition(this.start_x, this.start_y);
-
-        this.direction = false;
-        var i;
-        for (i = 0; i < this.time; i++){
-            this._move_eight(i);
-        }
-    },
-
-    _move_eight: function (time)
-    {
-        /* Update for circle eight movement pattern. */
-        if (time % (2 * this.step_value) - Math.floor(this.step_value / 2) == 0) {
-            this.direction = !this.direction;
+                if (distance < min_distance){
+                    min_distance = distance;
+                    nearest_bot = opponent;
+                }
+            }
         }
 
-        if (this.direction) {
-            this.x += (Math.sin((time + 1) * this.step) - Math.sin(time * this.step)) * this.diameter;
-            this.y += (Math.cos((time + 1) * this.step) - Math.cos(time * this.step)) * this.diameter;
-            this.setRotation(Math.cos(time * this.step) + Math.PI / 2);
-        } else {
-            this.x += -(Math.sin((time + 1) * this.step) - Math.sin(time * this.step)) * this.diameter;
-            this.y += (Math.cos((time + 1) * this.step) - Math.cos(time * this.step)) * this.diameter;
-            this.setRotation(-Math.cos(time * this.step) - Math.PI / 2);
+        if (nearest_bot == 0 || nearest_bot == null){
+            return
         }
+
+        var dx = nearest_bot.x - this.x;
+        var dy = nearest_bot.y - this.y;
+
+        var angle = Math.atan(dy / dx);
+
+        this.x += this.speed * Math.cos(angle);
+        this.y += this.speed * Math.sin(angle);
+
     },
 
     destroy_bot: function ()
     {
-        if(this.active){
-            this.destroy();
-            this._hide_name();
-            numBots -= 1;
-        }
+        this.destroy();
+        this._hide_name();
+        numBots -= 1;
     },
 
-    shoot_nearest: function (time)
+    resize: function ()
     {
-        /* Shoot nearest game object to bot. */
-        var closest = this.scene.physics.closest(this);
-
-        if (typeof closest === 'undefined'){
-            return;
-        }
-
-        var dist = Math.pow(Math.pow(this.x - closest.x, 2) + Math.pow(this.y - closest.y, 2), .5)
-
-        if (time > this.reloadingUntil && dist < BOT_RANGE)
-        {
-            var x_noise = Phaser.Math.Between(-10, 10);
-            var y_noise = Phaser.Math.Between(-10, 10);
-            this.fire(closest.x + x_noise, closest.y + y_noise, time, 500);
-        }
+        this._scale = (this._score+50)/50;
+        this.setScale(this._scale);
+        this.body.setSize(HITBOX_SCALE * this.width, HITBOX_SCALE * this.height, true);
+        this.nameOffsetY = this.height*this._scale/2; 
+        this.nameOffsetX = (this.name.width/2)+(worldScale*10);
     },
 
-    owns: function (bullet)
+    get_score: function ()
     {
-        /* Does this ship own bullet? */
-        return bullet.get_owner() == this._name;
+        return this._score;
+    },
+
+    increase_score: function (inc)
+    {
+        this._score += inc;
+        this._score = Math.min(3000, this._score); // fix graphical bugs
     }
 });
 
@@ -320,9 +200,12 @@ var Player = new Phaser.Class({
 
     initialize: function Player (scene, is_main, name)
     {
-        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'ship');
+        var color = new Phaser.Display.Color();
+        color.random();
+        Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, 25, 25, color.color);
         this.setDepth(2);
         this.is_main = is_main;
+        this._growthRate = .8;
         this._name = name;
         this._score = 0;
 
@@ -343,29 +226,34 @@ var Player = new Phaser.Class({
 
     update: function (time, delta)
     {
+        this.resize()
         this._update_name();
 
         if (this.is_main)
         {
             var angle = Phaser.Math.Angle.Between(mouseX, mouseY, this.x, this.y);
-            this.setRotation(angle - Math.PI / 2);
 
             this.speed = (Math.abs(Math.abs(mouseX)-Math.abs(this.x)) + Math.abs(Math.abs(mouseY)-Math.abs(this.y)));
             this.speed = Phaser.Math.GetSpeed(Math.min(this.speed, this.speedMax), 1);
 
             this.x -= Math.cos(angle) * (this.speed * delta);
             this.y -= Math.sin(angle) * (this.speed * delta);
+        }
+    },
 
-            if (time > this.reloadingUntil)
-            {
-                if (leftDown)
-                {
-                    this.fire(mouseX, mouseY, time, 1000);
-                }
-                if (middleDown)
-                {
-                    this.blast(mouseX, mouseY, time)
-                }
+    resize: function ()
+    {
+        this._scale = (this._score+50)/50;
+        this.setScale(this._scale);
+        
+        this.nameOffsetY = this.height*this._scale/2; 
+        this.nameOffsetX = (this.name.width/2)+(worldScale*15);
+        this.body.setSize(HITBOX_SCALE * this.width, HITBOX_SCALE * this.height, true);
+
+        if(this.is_main){
+            if(this._scale > (worldScale + 1) * 4 && worldScale < 8){
+                worldScale += 1;
+                scaleChange = true;
             }
         }
     },
@@ -404,10 +292,12 @@ class Leaderboard {
         this.entry = [];
         for (var i = 0; i < n_entries; i++) {
             var e = [];
-            e[0] = scene.add.text(SCREEN_WIDTH - 200, 10 + (20 * i), i, { fixedWidth: 150, fixedHeight: 36 });
-            e[1] = scene.add.text(SCREEN_WIDTH - 50, 10 + (20 * i), i, { fixedWidth: 150, fixedHeight: 36 });
+            e[0] = scene.add.text(410+textScale*(SCREEN_WIDTH-200)-(.5*SCREEN_WIDTH*textScale) , 310-(.5*SCREEN_HEIGHT*textScale)+((5*worldScale+20) * i), i, { fixedWidth: 150, fixedHeight: 36 });
+            e[1] = scene.add.text(410+textScale*(SCREEN_WIDTH-200)+(150*textScale)-(.5*SCREEN_WIDTH*textScale), 310-(.5*SCREEN_HEIGHT*textScale)+((5*worldScale+20) * i), i, { fixedWidth: 150, fixedHeight: 36 });
 
+            e[0].setFontSize(16);
             e[0].setScrollFactor(0, 0);
+            e[1].setFontSize(16);
             e[1].setScrollFactor(0, 0);
 
             this.entry[i] = e;
@@ -422,13 +312,22 @@ class Leaderboard {
         return this.bots.getChildren().concat(this.players.getChildren());
     }
 
+    setVisible (value) {
+        for (var i = 0; i < this.n_entries; i++) {
+            this.entry[i][0].setVisible(value);
+            this.entry[i][1].setVisible(value);
+        }
+    }
+
     update () {
         var ships = this._list_ships();
         ships.sort(function(a, b){return b._score - a._score});
 
         for (var i = 0; i < this.n_entries; i++) {
             if(typeof ships[i] !== 'undefined'){
+                this.entry[i][0].setScale(textScale)
                 this.entry[i][0].text = ships[i]._name;
+                this.entry[i][1].setScale(textScale)
                 this.entry[i][1].text = ships[i]._score;
             }
         }
@@ -443,37 +342,72 @@ function spawn_bots (n)
     */
     numBots += n;
     for (var i = 0; i < n; i++) {
-        var curr_bot = bots.get('Bot '+Phaser.Math.Between(1,999));
-        curr_bot.spawn(Phaser.Math.Between(i*(MAP_WIDTH/n), (i+1)*(MAP_WIDTH/n)), Phaser.Math.Between(i*(MAP_HEIGHT/n), (i+1)*(MAP_HEIGHT/n)));
+        var bot = bots.get('Bot '+Phaser.Math.Between(1,999));
+        bot.spawn(Phaser.Math.Between(i*(MAP_WIDTH/n), (i+1)*(MAP_WIDTH/n)), Phaser.Math.Between(i*(MAP_HEIGHT/n), (i+1)*(MAP_HEIGHT/n)));
     }
 }
 
-function player_hit(player, bullet)
+function spawn_points (scene, n)
 {
-    if(!player.owns(bullet))
-    {
-        bullet.owner_ref._score += 5;
-
-        player.destroy_player();
-        bullet.destroy_bullet();
-    }
-}
-
-function bot_hit(bot, bullet)
-{
-    if(!bot.owns(bullet))
-    {
-        bullet.owner_ref._score += 5;
-
-        bot.destroy_bot();
-        bullet.destroy_bullet();
+    numPoints += n;
+    var color = new Phaser.Display.Color();
+    for (var i = 0; i < n; i++) {
+        color.random();
+        var point = new Phaser.GameObjects.Ellipse(scene, Phaser.Math.Between(0, MAP_WIDTH), Phaser.Math.Between(0, MAP_HEIGHT), 15, 15, color.color);
+        points.add(point, true);
     }
 }
 
 function bot_player_collision(bot, player)
 {
-    bot.destroy_bot();
-    player.destroy_player();
+    if(bot.get_score() < player.get_score())
+    {
+        player.increase_score(bot.get_score()+1);
+        bot.destroy_bot();
+    }
+    else if(bot.get_score() > player.get_score())
+    {
+        bot.increase_score(player.get_score()+1);
+        player.destroy_player();
+    }
+    else
+    {
+        bot.destroy_bot();
+        player.destroy_player();
+    }
+}
+
+function bot_bot_collision(bot1, bot2)
+{
+    if(bot1.get_score() < bot2.get_score())
+    {
+        bot2.increase_score(bot1.get_score()+1);
+        bot1.destroy_bot();
+    }
+    else if(bot1.get_score() > bot2.get_score())
+    {
+        bot1.increase_score(bot2.get_score()+1);
+        bot2.destroy_bot();
+    }
+    else
+    {
+        bot1.destroy_bot();
+        bot2.destroy_bot();
+    }
+}
+
+function point_bot_collision(point, bot)
+{
+    bot.increase_score(1);
+    point.destroy();
+    numPoints -= 1;
+}
+
+function point_player_collision(point, player)
+{
+    player.increase_score(1);
+    point.destroy();
+    numPoints -= 1;
 }
 
 function preload ()
@@ -481,16 +415,12 @@ function preload ()
     /*
     Preload is called by Phaser before anything else.
     */
-    this.load.image('ship', '../assets/sprites/ship.png');
-    this.load.image('bullet1', '../assets/sprites/bullet.png');
-    this.load.image('bullet2', '../assets/sprites/bullet2.png');
     this.load.image('button', '../assets/sprites/button.png');
-    this.load.image('star', '../assets/sprites/star.png');
 
     var url;
     url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexbbcodetextplugin.min.js';
     this.load.plugin('rexbbcodetextplugin', url, true);
-  
+
     url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rextexteditplugin.min.js';
     this.load.plugin('rextexteditplugin', url, true);
 }
@@ -505,19 +435,14 @@ function create ()
     //  Declarations    //
     //////////////////////
 
-    this.input.setDefaultCursor('url(../assets/SC2-target-none.cur, pointer)');
-
-    // Prevent right click context menu
-    this.oncontextmenu = function (e) { e.preventDefault(); }
-
     // Set global variables for pointer control
     this.input.on('pointerdown', function (pointer) {
         leftDown = pointer.leftButtonDown();
-        middleDown = pointer.middleButtonDown();
+        rightDown = pointer.rightButtonDown();
     });
     this.input.on('pointerup', function (pointer) {
         leftDown = pointer.leftButtonDown();
-        middleDown = pointer.middleButtonDown();
+        rightDown = pointer.rightButtonDown();
     });
 
     //////////////////////
@@ -526,15 +451,13 @@ function create ()
 
     this.cameras.main.setBounds(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-    for(var i=0;i<80;i++)
-    {
-        this.add.sprite(Phaser.Math.Between(0, MAP_WIDTH), Phaser.Math.Between(0, MAP_HEIGHT), 'star', 0);
-    }
-
     var player_bounds = new Phaser.Geom.Rectangle(0, 0, MAP_WIDTH, MAP_HEIGHT);
+
+    points = this.physics.add.group();
+
     players = this.physics.add.group({
         classType: Player,
-        maxSize: maxPlayers + 100,
+        maxSize: maxPlayers,
         customBoundsRectangle: player_bounds,
         collideWorldBounds: true,
         runChildUpdate: true
@@ -542,20 +465,14 @@ function create ()
 
     bots = this.physics.add.group({
         classType: Bot,
-        maxSize: maxBots + 100,
+        maxSize: maxBots,
         runChildUpdate: true
     });
 
-    bullets = this.physics.add.group({
-        classType: Bullet,
-        maxSize: maxBullets + 100,
-        runChildUpdate: true
-    });
-
-
-    this.physics.add.collider(players, bullets, player_hit, null, this);
-    this.physics.add.collider(bots, bullets, bot_hit, null, this);
     this.physics.add.collider(bots, players, bot_player_collision, null, this);
+    this.physics.add.collider(bots, bots, bot_bot_collision, null, this);
+    this.physics.add.collider(points, players, point_player_collision, null, this);
+    this.physics.add.collider(points, bots, point_bot_collision, null, this);
 
     ////////////////////////
     //  User Interface    //
@@ -565,10 +482,11 @@ function create ()
     ui_rect = this.add.rectangle(center_x-4, center_y, rect_w, rect_h, 0x555555);
     ui_rect.setOrigin(0.5, 0.5);
 
-    game_name = this.add.text(center_x, center_y-40, 'clone.io', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    game_name = this.add.text(center_x, center_y-40, 'plankton.io', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
     game_name.setOrigin(0.5, 0.5);
 
     var initial_text = 'Enter name here';
+
     var editbox = null;
     // https://codepen.io/rexrainbow/pen/GaxqLZ?editors=0010
     name_input = this.add.rexBBCodeText(center_x, center_y-12, initial_text, {
@@ -576,7 +494,6 @@ function create ()
         fontSize: '14px',
         fixedWidth: 140,
         fixedHeight: 20,
-        //valign: 'center'
     })
         .setOrigin(0.5)
         .setInteractive()
@@ -633,17 +550,23 @@ function update (time, delta)
     /*
     Update is called by Phaser at every timestep.
     */
+    
+    if(scaleChange){
+        scaleChange = false;
+        leaderboard.setVisible(false);
+        zoomLevel = 1/(1.2**worldScale);
+        this.cameras.main.zoomTo(zoomLevel);
+        textScale = 1/zoomLevel;
+        leaderboard = new Leaderboard(this, 5, bots, players);
+    }
+
     this.cameras.main.startFollow(player_main);
+
     var pos = this.cameras.main.getWorldPoint(this.input.mousePointer.x, this.input.mousePointer.y);
     mouseX = pos.x;
     mouseY = pos.y;
 
-    // Each bot shoot nearest enemy
-    bots.children.each(function(bot) {
-        bot.shoot_nearest(time);
-    }, this);
-
-    numBots = Math.max(0, numBots);
     spawn_bots(maxBots - numBots);
+    spawn_points(this, maxPoints - numPoints);
     leaderboard.update();
 }

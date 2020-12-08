@@ -11,9 +11,9 @@ class GameCard extends Component {
                 <div className="game-card">
                     <div style={{backgroundColor: !!this.props.color ? this.props.backgroundColor : "white"}} className="game-image">Image placeholder</div>
                     <div className="game-info">
-                        <h3>{this.props.name}</h3>
-                        <p>{this.props.description}</p>
-                        <h5>Last updated {this.props.updated}</h5>
+                        <h3>{!!this.props.name ? this.props.name : "Game Title"}</h3>
+                        <p>{!!this.props.description ? this.props.description : ""}</p>
+                        <h5>Last updated {!!this.props.updated ? this.props.updated : "12/7/2020"}</h5>
                     </div>
                 </div>
             </Link>
