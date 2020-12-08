@@ -4,7 +4,6 @@ import "./GameDetails.scss";
 import Button from "../../components/Button/Button";
 import ApiClient from "../../ApiClient";
 import InputWithButton from "../../components/InputWithButton/InputWithButton";
-import GameBanner from "../../games/1/game-banner.png";
 
 class GameDetails extends Component {
 

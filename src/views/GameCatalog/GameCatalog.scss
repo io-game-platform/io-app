@@ -1,0 +1,15 @@
+@import "../../index";
+
+.card-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 3rem;
+  margin-right: 3rem;
+
+  .empty-notifier {
+    color: $color-white;
+    width: 100%;
+  }
+
+}
