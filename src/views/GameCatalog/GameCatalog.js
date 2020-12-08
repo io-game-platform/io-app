@@ -50,7 +50,7 @@ class GameCatalog extends Component {
                         <GameCard
                             key={game.id}
                             id={game.id}
-                            name={game.name}
+                            name={game.title}
                             description={game.description}
                             updated={game.updated}/>
                     )) :
