@@ -9,7 +9,7 @@ import { useDarkMode } from './useDarkMode';
 
 function Settings() {
     const [theme, toggleTheme, componentMounted] = useDarkMode();
-    const themeMode = theme === 'light' ? lightTheme : darkTheme;
+    const themeMode = theme === 'dark' ? darkTheme : lightTheme;
     if (!componentMounted) {
         return <div />
     };

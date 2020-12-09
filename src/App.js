@@ -17,7 +17,7 @@ import { useDarkMode } from './views/Settings/useDarkMode';
 
 function App() {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
-  const themeMode = theme === 'light' ? lightTheme : darkTheme;
+  const themeMode = theme === 'dark' ? darkTheme : lightTheme;
   if (!componentMounted) {
       return <div />
   };
