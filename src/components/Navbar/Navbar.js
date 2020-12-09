@@ -14,6 +14,7 @@ class Navbar extends Component {
                     <Link to="/games">Games</Link>
                     <Link to="/templates">Templates</Link>
                     <Link to="/about">About</Link>
+                    <Link to="/settings">Settings</Link>
                 </div>
                 <div className="nav-right">
                     <Link to="/login">Log in</Link>

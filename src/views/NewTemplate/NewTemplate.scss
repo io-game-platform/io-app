@@ -10,8 +10,11 @@
         flex-direction: column;
     }
 
+    .input-field {
+        padding-top: .8rem;
+    }
+
     .game-title {
-        color: $color-white;
         h1 { font-size: 100%; }
         h2 { font-size: 120%; }
     }
@@ -26,7 +29,7 @@
 }
 
 .game-select {
-    color: $color-white;
+    padding: 5rem;
 
     #slider {
         -webkit-appearance: none;

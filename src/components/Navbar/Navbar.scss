@@ -7,7 +7,8 @@
   user-select: none;
   justify-content: space-between;
   white-space: nowrap;
-  background-color: $color-background-dark;
+  // background-color: $color-background-dark;
+  background-color: #282c34;
   z-index: 5;
 
   .nav-left {
@@ -27,7 +28,8 @@
   a, h1 {
     font-size: 1.5em;
     text-decoration: none;
-    color: $color-white;
+    // color: $color-white;
+    color: #e0e0e0;
   }
 
   a {
@@ -47,7 +49,8 @@
       height: 2px;
       bottom: 0;
       left: 0;
-      background-color: $color-primary-light;
+      // background-color: $color-primary-light;
+      background-color: #6a6eff;
       visibility: hidden;
       transform: scaleX(0);
       transition: all 0.2s ease-in-out 0s;

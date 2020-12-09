@@ -1,0 +1,11 @@
+@import "../../index";
+
+.settings-container {
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #242424;
+    padding: 10px 30px;
+}
