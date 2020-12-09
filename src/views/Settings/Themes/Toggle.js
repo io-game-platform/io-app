@@ -12,9 +12,6 @@ const ToggleContainer = styled.button`
   display: flex;
   font-size: 0.5rem;
   justify-content: space-between;
-  // margin: 0 auto;
-  margin-left: auto;
-  margin-right: 3rem;
   overflow: hidden;
   padding: 0.5rem;
   position: relative;
