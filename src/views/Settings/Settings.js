@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useState} from "react";
 import "./Settings.scss";
 import Button from "../../components/Button/Button";
@@ -32,6 +33,17 @@ function Settings() {
                         </a>
                     </div>
                 </div>
+=======
+import React from "react";
+import "./Settings.scss";
+import { Component } from "react";
+import Button from "../../components/Button/Button";
+
+class Settings extends Component {
+    render() {
+        return (
+            <div className="page-container">
+>>>>>>> f2a18bb299e3837d4cd52dd5b7f65ccf3f38c55c
                 <div className="settings-container">
                     <div className="placeholder-setting">
                         <div>
@@ -63,8 +75,14 @@ function Settings() {
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
         </ThemeProvider>
     );
+=======
+        );
+    }
+
+>>>>>>> f2a18bb299e3837d4cd52dd5b7f65ccf3f38c55c
 }
 
 export default Settings;
