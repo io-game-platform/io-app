@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './views/Settings/Themes/theme';
 import { GlobalStyles } from './views/Settings/Themes/global';
 import Navbar from "./components/Navbar/Navbar";
-import GameCatalog from "./views/GameCatalog";
+import GameCatalog from "./views/GameCatalog/GameCatalog";
 import GameDetails from "./views/GameDetails/GameDetails";
 import NewTemplate from './views/NewTemplate/NewTemplate';
 import GameTemplates from './views/GameTemplates/GameTemplates';
