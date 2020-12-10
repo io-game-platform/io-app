@@ -53,3 +53,9 @@ An id of 1 is used as an example here.
     - `views`: pages of the site, often using `components`,
      along with fetch requests to the API to retrieve and display data
     - `App.js`: Defines the URL routes to each page
+    
+## Hosting
+
+To host this site we used a Fedora Server Machine running Nginx. To host the server properly, Nginx configuration
+must be done correctly, otherwise the site and the api will have issues communicating. In the hosting folder is the
+nginx.conf and io.binaryaura.net.conf nginx configuration files relavent to hosting.
