@@ -59,3 +59,13 @@ An id of 1 is used as an example here.
 To host this site we used a Fedora Server Machine running Nginx. To host the server properly, Nginx configuration
 must be done correctly, otherwise the site and the api will have issues communicating. In the hosting folder is the
 nginx.conf and io.binaryaura.net.conf nginx configuration files relavent to hosting.
+
+Once io-app is cloned the games must be installed in games/#/ where # is the game id found in the database. Then
+the app can be started with:
+
+```bash
+npm install
+pm2 start api/app.js
+```
+
+Note you can also use node instead of pm2.
